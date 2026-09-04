@@ -23,6 +23,7 @@
   const welcomeName = document.querySelector("#welcomeName");
   const accountAvatar = document.querySelector("#accountAvatar");
   const modelSelect = document.querySelector("#modelSelect");
+  const sendButton = document.querySelector(".voice-button");
   const attachmentButton = document.querySelector("#attachmentButton");
   const attachmentInput = document.querySelector("#attachmentInput");
   const attachmentChip = document.querySelector("#attachmentChip");
@@ -361,6 +362,8 @@
       removeAttachment.click();
     }
   });
+
+  sendButton.addEventListener("click", () => homeComposer.requestSubmit());
 
   document.querySelector("#upgradeButton").addEventListener("click", async () => {
     try {
