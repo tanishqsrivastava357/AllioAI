@@ -459,7 +459,7 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
 }));
 
 app.use((req, res, next) => {
-  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|privacy-policy|tnc|google-test)\.html$/);
+  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|release|privacy-policy|tnc|google-test)\.html$/);
   if (!match) return next();
   return res.redirect(308, `/${match[1]}${req.url.slice(req.path.length)}`);
 });
