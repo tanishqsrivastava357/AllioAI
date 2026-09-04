@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | AllioAI</title>
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/stylesforallioai.css" />
+    <style>
+      .policy-page {
+        padding: 56px 0 80px;
+      }
+
+      .policy-hero {
+        position: relative;
+        padding: 42px 0 24px;
+      }
+
+      .policy-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 15%, rgba(124, 58, 237, 0.22), transparent 28%),
+          radial-gradient(circle at 78% 10%, rgba(34, 211, 238, 0.18), transparent 26%);
+        pointer-events: none;
+      }
+
+      .policy-hero .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        padding: 9px 16px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #dfe7ff;
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+
+      .policy-hero h1 {
+        margin: 0;
+        font-size: clamp(2.4rem, 5vw, 4.3rem);
+        letter-spacing: -0.06em;
+        line-height: 1.05;
+      }
+
+      .policy-hero p {
+        margin: 16px 0 0;
+        color: #b6bfce;
+        font-size: 1.02rem;
+      }
+
+      .policy-layout {
+        display: grid;
+        grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+      }
+
+      .policy-sidebar {
+        position: sticky;
+        top: 102px;
+        padding: 20px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        background: rgba(11, 16, 27, 0.72);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+      }
+
+      .sidebar-title {
+        margin: 0 0 16px;
+        color: #f5f7ff;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .policy-sidebar a {
+        display: block;
+        padding: 10px 12px;
+        margin-bottom: 6px;
+        border-radius: 10px;
+        color: #c7d1e6;
+        background: transparent;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+      }
+
+      .policy-sidebar a:hover,
+      .policy-sidebar a:focus-visible {
+        background: rgba(124, 58, 237, 0.12);
+        color: #ffffff;
+        transform: translateX(2px);
+      }
+
+      .policy-content {
+        display: grid;
+        gap: 22px;
+      }
+
+      .policy-section {
+        background: rgba(17, 24, 39, 0.78);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 22px;
+        padding: 28px 30px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      }
+
+      .policy-section h2 {
+        margin: 0 0 16px;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+        letter-spacing: -0.04em;
+      }
+
+      .policy-section p,
+      .policy-section li {
+        color: #d6ddec;
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+
+      .policy-section p {
+        margin: 0 0 14px;
+      }
+
+      .policy-section ul,
+      .policy-section ol {
+        margin: 0 0 16px;
+        padding-left: 22px;
+      }
+
+      .policy-section strong {
+        color: #f5f7ff;
+      }
+
+      .policy-section .contact-card {
+        margin-top: 18px;
+        padding: 18px 20px;
+        border-radius: 14px;
+        background: rgba(124, 58, 237, 0.08);
+        border: 1px solid rgba(124, 58, 237, 0.22);
+      }
+
+      .policy-section .contact-card p {
+        margin: 0;
+      }
+
+      @media (max-width: 900px) {
+        .policy-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .policy-sidebar {
+          position: static;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .policy-page {
+          padding-top: 32px;
+        }
+
+        .policy-section {
+          padding: 22px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="AllioAI home">
+          <img src="../assets/logo.png" alt="AllioAI logo" class="header-logo" />
+          <span class="brand-name">AllioAI</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html#Features">Features</a>
+          <a href="index.html#Models">Models</a>
+          <a href="index.html#Pricing">Pricing</a>
+          <a href="index.html#FAQ">FAQ</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="signin.html" class="header-signin-button">Sign In</a>
+          <a href="app.html" class="header-getstarted-button">Get Started</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="policy-page">
+      <section class="policy-hero">
+        <div class="container">
+          <div class="eyebrow">Legal</div>
+          <h1>Privacy Policy</h1>
+          <p>Effective Date: September 1, 2026 • Last Updated: September 2, 2026</p>
+        </div>
+      </section>
+
+      <div class="container policy-layout">
+        <aside class="policy-sidebar" aria-label="Privacy policy sections">
+          <p class="sidebar-title">Contents</p>
+          <a href="#overview">Overview</a>
+          <a href="#information-we-collect">Information We Collect</a>
+          <a href="#how-we-use">How We Use Information</a>
+          <a href="#sharing">Sharing & Disclosure</a>
+          <a href="#your-rights">Your Rights</a>
+          <a href="#security">Security & Retention</a>
+          <a href="#cookies">Cookies & Tracking</a>
+          <a href="#changes">Changes to This Policy</a>
+          <a href="#contact">Contact</a>
+        </aside>
+
+        <article class="policy-content">
+          <section class="policy-section" id="overview">
+            <h2>Overview</h2>
+            <p>
+              AllioAI is committed to protecting the privacy and security of the information you share with us.
+              This Privacy Policy explains how we collect, use, store, disclose, and protect personal data and other information
+              when you access or use AllioAI’s website, applications, AI tools, workspaces, and related services.
+            </p>
+            <p>
+              By using our Services, you agree that your information may be processed in accordance with this Privacy Policy and
+              applicable laws. We aim to keep this process transparent, secure, and minimal.
+            </p>
+          </section>
+
+          <section class="policy-section" id="information-we-collect">
+            <h2>Information We Collect</h2>
+            <p>We may collect information in the following ways:</p>
+            <ul>
+              <li>Account information such as your name, email address, login details, and profile preferences.</li>
+              <li>Usage information including pages visited, feature usage, searches, session activity, and app interactions.</li>
+              <li>Content you provide, such as prompts, uploaded files, documents, images, project inputs, and chat history.</li>
+              <li>Device and technical information, including IP address, browser type, operating system, device identifiers, and diagnostics.</li>
+              <li>Payment and billing information when you subscribe to a paid plan.</li>
+              <li>Customer support communications and feedback you submit to us.</li>
+            </ul>
+            <p>We only collect information that is reasonably necessary to operate, secure, and improve the Services.</p>
+          </section>
+
+          <section class="policy-section" id="how-we-use">
+            <h2>How We Use Information</h2>
+            <p>We use the information we collect to:</p>
+            <ul>
+              <li>Provide, maintain, and improve the AllioAI experience.</li>
+              <li>Authenticate users and protect accounts from unauthorized access.</li>
+              <li>Deliver AI features, including chat, content generation, research, analysis, and workspace tools.</li>
+              <li>Personalize settings, recommendations, and product experiences.</li>
+              <li>Respond to support requests and troubleshoot issues.</li>
+              <li>Monitor performance, detect abuse, and maintain platform security.</li>
+              <li>Fulfill legal obligations and enforce our terms and policies.</li>
+            </ul>
+          </section>
+
+          <section class="policy-section" id="sharing">
+            <h2>Sharing &amp; Disclosure</h2>
+            <p>We do not sell personal data. We may share information only in the following limited situations:</p>
+            <ul>
+              <li>With trusted service providers that support hosting, infrastructure, analytics, payments, or customer support.</li>
+              <li>When required by law, court order, regulation, or a valid legal request.</li>
+              <li>To protect the rights, safety, and security of AllioAI, our users, or the public.</li>
+              <li>During a merger, acquisition, or sale of substantially all of our assets, where applicable safeguards are in place.</li>
+            </ul>
+            <p>Where possible, we use contractual protections and security requirements to limit third-party access to data.</p>
+          </section>
+
+          <section class="policy-section" id="your-rights">
+            <h2>Your Rights</h2>
+            <p>Depending on your jurisdiction, you may have rights regarding your personal data, including:</p>
+            <ul>
+              <li>Accessing the personal data we hold about you.</li>
+              <li>Requesting correction or deletion of your data.</li>
+              <li>Restricting or objecting to certain processing activities.</li>
+              <li>Withdrawing consent where consent is used as a legal basis.</li>
+              <li>Requesting information about data transfers and disclosures.</li>
+            </ul>
+            <p>To exercise these rights, please contact us using the details in the Contact section below.</p>
+          </section>
+
+          <section class="policy-section" id="security">
+            <h2>Security &amp; Retention</h2>
+            <p>
+              We implement reasonable administrative, technical, and organizational safeguards designed to protect your information
+              from unauthorized access, misuse, disclosure, alteration, or destruction.
+            </p>
+            <p>
+              We retain personal data only for as long as necessary to provide the Services, fulfill legal obligations, resolve disputes,
+              and enforce our policies. When information is no longer needed, we delete or anonymize it in accordance with applicable law.
+            </p>
+          </section>
+
+          <section class="policy-section" id="cookies">
+            <h2>Cookies &amp; Tracking</h2>
+            <p>
+              AllioAI may use cookies, analytics tools, and similar technologies to understand how the website and services are used,
+              improve performance, and support security and product development. These technologies may collect usage data and technical
+              information about your device and browser.
+            </p>
+            <p>
+              You can usually control cookies through your browser settings. However, disabling certain cookies may affect the functionality
+              of some features and pages.
+            </p>
+          </section>
+
+          <section class="policy-section" id="changes">
+            <h2>Changes to This Policy</h2>
+            <p>
+              We may update this Privacy Policy from time to time to reflect product changes, regulatory requirements, or operational needs.
+              When the update is material, we may notify you via the platform, email, or another appropriate channel.
+            </p>
+            <p>The “Last Updated” date at the top of this page indicates when this policy was most recently revised.</p>
+          </section>
+
+          <section class="policy-section" id="contact">
+            <h2>Contact</h2>
+            <p>If you have questions, concerns, or requests related to this Privacy Policy or your personal data, please contact us.</p>
+            <div class="contact-card">
+              <p><strong>AllioAI</strong></p>
+              <p>Email: support.allio.ai@gmail.com</p>
+              <p>Registered Office: AllioAI, 232, Plot No.22, Sector-12, Dwarka, New Delhi - 110078</p>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+backend/.env
+**/.env
+**/.env.*
+!**/.env.example
+backend/data/store.json
+backend/data/store.json.tmp
+node_modules/

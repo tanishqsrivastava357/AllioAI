@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sign-In Test | AllioAI</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #0a0c14;
+        color: #f5f7ff;
+        font-family: Arial, sans-serif;
+      }
+
+      main {
+        width: min(520px, calc(100% - 32px));
+        padding: 32px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        background: #121827;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      #result {
+        margin-top: 20px;
+        color: #b6bfce;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Google Sign-In Test</h1>
+      <p>This page tests Google Identity Services without React or the AllioAI backend.</p>
+
+      <div
+        id="g_id_onload"
+        data-client_id="739316203566-cv5g9feiv3f6g2os32gui632hs3o622p.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse"
+      ></div>
+      <div class="g_id_signin"></div>
+      <p id="result" role="status">Waiting for Google Sign-In...</p>
+    </main>
+
+    <script>
+      function handleCredentialResponse(response) {
+        document.getElementById("result").textContent =
+          "Google returned a credential successfully.";
+        console.log("Google credential received:", response);
+      }
+    </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </body>
+</html>

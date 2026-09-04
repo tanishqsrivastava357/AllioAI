@@ -1,0 +1,111 @@
+@import url('https://googleapis.com');
+html
+{
+    scroll-padding-top: 75px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+body
+{
+    background-color: #0F0F0F;
+    min-height: 20000px;
+    overflow-x: hidden;
+}
+.header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 75px;
+    background-color: #0F0F0F;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    z-index: 10;
+}
+.header-logo
+{
+    height: 40px;
+    margin: 12.5px 0 12.5px 20px;
+    position: fixed;
+    top: 3px;
+    left: 250px;
+}
+.header-logo-title
+{
+    position: fixed;
+    top: 7px;
+    left: 313px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.header-heading
+{
+    position: fixed;
+    top: 7px;
+    left: 1200px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+.table-of-contents
+{
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 75px);
+    background-color: #0F0F0F;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    z-index: 5;
+}
+.privacy-policy
+{
+    position: absolute;
+    left: 255px;
+    top: 75px;
+    color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
+}
+.privacy-sidebar
+{
+    position: fixed;
+    top: 75px;
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 75px);
+    background-color: #0F0F0F;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    z-index: 10;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 16px 14px 20px;
+}
+.link-styles
+{
+    display: block;
+    padding: 6px 0;
+    text-decoration: none;
+    color: #FFFFFF;
+    position: static;
+    left: auto;
+    line-height: 1.4;
+}
+.link-styles:hover
+{
+    color: #d4d4d4;
+}
+.sidebar-heading
+{
+    font-weight: bold;
+    margin: 0 0 10px;
+    position: static;
+    left: auto;
+    color: #FFFFFF;
+}

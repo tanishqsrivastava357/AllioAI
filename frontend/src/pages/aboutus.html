@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About AllioAI</title>
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/stylesforallioai.css" />
+    <style>
+      .about-page { padding: 56px 0 80px; }
+      .about-hero { position: relative; padding: 46px 0 48px; }
+      .about-hero::before {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(circle at 18% 15%, rgba(124,58,237,.24), transparent 30%),
+          radial-gradient(circle at 82% 8%, rgba(34,211,238,.18), transparent 28%),
+          radial-gradient(circle at 55% 90%, rgba(236,72,153,.1), transparent 24%);
+      }
+      .about-hero .container { position: relative; z-index: 1; max-width: 930px; }
+      .about-eyebrow {
+        display: inline-flex; padding: 9px 16px; margin-bottom: 20px;
+        border: 1px solid rgba(255,255,255,.08); border-radius: 999px;
+        background: rgba(255,255,255,.04); color: #dfe7ff;
+        font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+      }
+      .about-hero h1 {
+        margin: 0; max-width: 760px; font-size: clamp(2.8rem, 7vw, 5.7rem);
+        line-height: .98; letter-spacing: -.07em;
+      }
+      .about-hero h1 span {
+        display: block; color: #c4b5fd;
+        background: linear-gradient(135deg, #a855f7, #22d3ee);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .about-hero p { max-width: 680px; margin: 24px 0 0; color: #b6bfce; font-size: 1.15rem; line-height: 1.8; }
+      .about-content { display: grid; gap: 22px; max-width: 1000px; margin: 0 auto; }
+      .about-section {
+        padding: 32px 34px; border: 1px solid rgba(255,255,255,.08);
+        border-radius: 24px; background: rgba(17,24,39,.78);
+        box-shadow: 0 20px 50px rgba(0,0,0,.18);
+      }
+      .about-section h2 { margin: 0 0 16px; font-size: clamp(1.55rem, 3vw, 2.2rem); letter-spacing: -.05em; }
+      .about-section h3 { margin: 24px 0 8px; color: #f5f7ff; font-size: 1.12rem; }
+      .about-section p, .about-section li { color: #d6ddec; font-size: 1.02rem; line-height: 1.85; }
+      .about-section p { margin: 0 0 16px; }
+      .about-section p:last-child { margin-bottom: 0; }
+      .about-section ul { margin: 0; padding-left: 22px; }
+      .about-section strong { color: #f5f7ff; }
+      .about-highlight {
+        margin-top: 22px; padding: 22px 24px; border: 1px solid rgba(34,211,238,.22);
+        border-radius: 16px; background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(34,211,238,.06));
+        color: #f5f7ff; font-size: 1.18rem; font-weight: 700;
+      }
+      .belief-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .belief-card {
+        padding: 20px; border: 1px solid rgba(255,255,255,.07); border-radius: 16px;
+        background: rgba(255,255,255,.025);
+      }
+      .belief-card h3 { margin-top: 0; color: #c4b5fd; }
+      .belief-card p { margin-bottom: 0; font-size: .97rem; }
+      .about-cta { text-align: center; background: linear-gradient(135deg, rgba(124,58,237,.16), rgba(37,99,235,.1)); }
+      .about-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); }
+      @media (max-width: 700px) {
+        .about-page { padding-top: 32px; }
+        .about-section { padding: 24px 20px; }
+        .belief-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="AllioAI home">
+          <img src="../assets/logo.png" alt="AllioAI logo" class="header-logo" />
+          <span class="brand-name">AllioAI</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html#Features">Features</a>
+          <a href="index.html#Models">Models</a>
+          <a href="index.html#Pricing">Pricing</a>
+          <a href="index.html#FAQ">FAQ</a>
+        </nav>
+        <div class="header-actions">
+          <a href="signin.html" class="header-signin-button">Sign In</a>
+          <a href="app.html" class="header-getstarted-button">Get Started</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="about-page">
+      <section class="about-hero">
+        <div class="container">
+          <div class="about-eyebrow">About AllioAI</div>
+          <h1>Intelligence, <span>Without Limits.</span></h1>
+          <p>We are building a smarter, simpler way to interact with AI — bringing powerful tools, intelligent conversations, creativity, productivity, and innovation together in one unified platform.</p>
+        </div>
+      </section>
+
+      <div class="container about-content">
+        <section class="about-section">
+          <h2>More Than an AI Chatbot</h2>
+          <p>At AllioAI, we believe artificial intelligence should not feel complicated, fragmented, or out of reach.</p>
+          <p>AllioAI is designed to become an all-in-one AI ecosystem that helps people think, create, learn, explore, and accomplish more.</p>
+          <div class="about-highlight">Make powerful artificial intelligence accessible, useful, and effortless for everyone.</div>
+        </section>
+
+        <section class="about-section">
+          <h2>Our Vision</h2>
+          <p>We envision a future where artificial intelligence works alongside people seamlessly.</p>
+          <p>Technology should adapt to people — not the other way around. Whether you are learning something new, solving a difficult problem, generating ideas, writing content, analyzing information, or building something innovative, AI should be available when you need it.</p>
+          <p>Our vision is to create a single intelligent platform that brings the power of modern AI together into one connected experience.</p>
+          <div class="about-highlight">One platform. Endless possibilities.</div>
+        </section>
+
+        <section class="about-section">
+          <h2>Our Mission</h2>
+          <p>Our mission is to make artificial intelligence accessible and genuinely useful.</p>
+          <p>We aim to simplify the way people interact with technology by creating tools that are:</p>
+          <ul>
+            <li>Powerful, yet simple to use.</li>
+            <li>Intelligent, yet easy to understand.</li>
+            <li>Advanced, yet accessible to everyone.</li>
+            <li>Innovative, yet practical for everyday life.</li>
+          </ul>
+          <p>We believe AI has the potential to transform how people learn, work, create, and solve problems. AllioAI exists to help make that future more accessible.</p>
+        </section>
+
+        <section class="about-section">
+          <h2>Why AllioAI?</h2>
+          <p>The world of artificial intelligence is evolving rapidly. New models, tools, and technologies appear constantly, often requiring users to switch between multiple platforms.</p>
+          <p>We believe there should be a better way. AllioAI is being built with the vision of bringing intelligent capabilities together into one seamless experience.</p>
+          <p>Instead of making AI feel fragmented, complicated, or overwhelming, we want to make it feel natural.</p>
+          <div class="about-highlight">Ask a question. Explore an idea. Create something new.</div>
+          <p>AllioAI is designed to help you do more — with less friction.</p>
+        </section>
+
+        <section class="about-section">
+          <h2>Built for Curious Minds</h2>
+          <p>AllioAI is built for people who are curious about what technology can help them achieve.</p>
+          <ul>
+            <li>Students exploring new subjects.</li>
+            <li>Creators turning ideas into reality.</li>
+            <li>Developers building the future.</li>
+            <li>Professionals solving complex problems.</li>
+            <li>Businesses looking for smarter ways to work.</li>
+            <li>Anyone who wants to explore the possibilities of artificial intelligence.</li>
+          </ul>
+          <p>No matter where you start, curiosity is often the first step towards innovation.</p>
+        </section>
+
+        <section class="about-section">
+          <h2>What We Believe</h2>
+          <div class="belief-grid">
+            <article class="belief-card">
+              <h3>Innovation Should Be Accessible</h3>
+              <p>Powerful technology should not be limited to experts. AI should be approachable and useful for everyone.</p>
+            </article>
+            <article class="belief-card">
+              <h3>Simplicity Matters</h3>
+              <p>Technology can be powerful without being unnecessarily complicated. We focus on intuitive, effortless experiences.</p>
+            </article>
+            <article class="belief-card">
+              <h3>Curiosity Drives Progress</h3>
+              <p>Every great discovery begins with a question. AI should encourage people to explore, learn, experiment, and think bigger.</p>
+            </article>
+            <article class="belief-card">
+              <h3>Humans Remain Important</h3>
+              <p>AI is a powerful tool, but people bring creativity, judgment, imagination, and purpose. The future is about amplifying human intelligence.</p>
+            </article>
+            <article class="belief-card">
+              <h3>The Future Should Be Built Responsibly</h3>
+              <p>We believe AI should be developed and used thoughtfully, with attention to safety, privacy, transparency, and real-world impact.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <h2>Building for the Future</h2>
+          <p>Artificial intelligence is still evolving. The way we interact with technology today may look completely different in the years ahead.</p>
+          <p>AI will become more capable, more integrated, and more deeply connected to the tools we use every day. AllioAI is being built with that future in mind.</p>
+          <p>We are constantly exploring new possibilities, improving experiences, and thinking about how AI can become more useful in everyday life.</p>
+          <p>Our journey is only beginning.</p>
+        </section>
+
+        <section class="about-section">
+          <h2>More Than Technology</h2>
+          <p>At its core, AllioAI is about possibility.</p>
+          <p>The possibility of learning faster. The possibility of creating without limits. The possibility of solving problems differently. The possibility of turning an idea into something real.</p>
+          <p>Technology alone is not what defines the future.</p>
+          <div class="about-highlight">People do.</div>
+          <p>The questions they ask. The ideas they explore. The things they create. And the problems they choose to solve.</p>
+          <p>AllioAI is here to help make those possibilities easier to explore.</p>
+        </section>
+
+        <section class="about-section about-cta">
+          <h2>Join the Journey</h2>
+          <p>We're building AllioAI for a future where intelligence is more accessible, creativity is less limited, and technology helps people achieve more.</p>
+          <p>This is just the beginning. As AI continues to evolve, so will we.</p>
+          <p>We invite you to explore, create, learn, and imagine what's possible.</p>
+          <h2>Welcome to AllioAI.</h2>
+          <div class="about-highlight">AI for Everything. One Mind.</div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Secure AllioAI sign in powered by Google.
+      Sign in to your account and continue with a privacy-first workflow."
+    />
+    <title>AllioAI | Sign In</title>
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/signin-styles.css" />
+    <script src="../scripts/google-config.js" defer></script>
+    <script src="../scripts/google-react-bundle.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <aside class="brand-panel">
+        <div class="brand-top">
+          <img src="../assets/logo.png" alt="AllioAI logo" class="brand-logo" />
+          <span class="brand-name">AllioAI</span>
+        </div>
+
+        <div class="hero-copy">
+          <div class="hero-badge">Secure access</div>
+          <h1>
+            <span>Welcome back</span>
+            <span class="gradient">to your workspace.</span>
+          </h1>
+          <p>
+            Sign in with Google to continue securely, stay in control of your sessions, and return to uninterrupted AI work.
+          </p>
+
+          <div class="preview-card" aria-label="Workspace preview">
+            <div class="preview-header">
+              <span class="preview-dot red"></span>
+              <span class="preview-dot yellow"></span>
+              <span class="preview-dot green"></span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-tag">Private by default</div>
+              <div class="preview-suggestion">Ask AllioAI to draft, summarize, and optimize your next move.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="form-panel">
+        <div class="auth-card">
+          <div class="auth-header">
+            <p class="eyebrow">Sign in</p>
+            <h2>Continue to AllioAI</h2>
+          </div>
+
+          <p class="subtext">Use your Google account to access your workspace securely.</p>
+
+          <div class="google-signin-wrap">
+            <div id="google-signin-button" aria-label="Continue with Google"></div>
+          </div>
+
+          <div class="divider">Protected access</div>
+
+          <p id="auth-status" class="auth-status" role="status" aria-live="polite">
+            Google sign-in is ready to be configured.
+          </p>
+
+          <div class="supporting-copy">
+            We only use Google sign-in for this app. No other auth provider is enabled.
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

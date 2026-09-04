@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms and Conditions | AllioAI</title>
+    <link rel="icon" href="../assets/logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/stylesforallioai.css" />
+    <style>
+      .legal-page { padding: 56px 0 80px; }
+      .legal-hero { position: relative; padding: 42px 0 24px; }
+      .legal-hero::before {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(circle at 20% 15%, rgba(124,58,237,.22), transparent 28%),
+          radial-gradient(circle at 78% 10%, rgba(34,211,238,.18), transparent 26%);
+      }
+      .legal-hero .container { position: relative; z-index: 1; }
+      .legal-eyebrow {
+        display: inline-flex; padding: 9px 16px; margin-bottom: 18px;
+        border: 1px solid rgba(255,255,255,.08); border-radius: 999px;
+        background: rgba(255,255,255,.04); color: #dfe7ff;
+        font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
+      }
+      .legal-hero h1 { margin: 0; font-size: clamp(2.4rem,5vw,4.3rem); letter-spacing: -.06em; line-height: 1.05; }
+      .legal-hero p { margin: 16px 0 0; color: #b6bfce; font-size: 1.02rem; }
+      .legal-layout { display: grid; grid-template-columns: minmax(220px,280px) minmax(0,1fr); gap: 28px; align-items: start; }
+      .legal-sidebar {
+        position: sticky; top: 102px; padding: 20px 18px;
+        border: 1px solid rgba(255,255,255,.08); border-radius: 18px;
+        background: rgba(11,16,27,.72); box-shadow: 0 20px 45px rgba(0,0,0,.2);
+      }
+      .legal-sidebar-title { margin: 0 0 16px; color: #f5f7ff; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+      .legal-sidebar a { display: block; padding: 9px 12px; margin-bottom: 4px; border-radius: 10px; color: #c7d1e6; transition: background .2s ease, color .2s ease, transform .2s ease; }
+      .legal-sidebar a:hover, .legal-sidebar a:focus-visible { background: rgba(124,58,237,.12); color: #fff; transform: translateX(2px); }
+      .legal-content { display: grid; gap: 22px; }
+      .legal-section {
+        padding: 28px 30px; border: 1px solid rgba(255,255,255,.08); border-radius: 22px;
+        background: rgba(17,24,39,.78); box-shadow: 0 20px 50px rgba(0,0,0,.18);
+      }
+      .legal-section h2 { margin: 0 0 16px; font-size: clamp(1.35rem,3vw,2rem); letter-spacing: -.04em; }
+      .legal-section h3 { margin: 22px 0 8px; color: #f5f7ff; font-size: 1.08rem; }
+      .legal-section p, .legal-section li { color: #d6ddec; font-size: 1rem; line-height: 1.8; }
+      .legal-section p { margin: 0 0 14px; }
+      .legal-section ul, .legal-section ol { margin: 0 0 16px; padding-left: 22px; }
+      .legal-section strong { color: #f5f7ff; }
+      .legal-callout { padding: 18px 20px; border: 1px solid rgba(124,58,237,.22); border-radius: 14px; background: rgba(124,58,237,.08); }
+      .legal-callout p:last-child { margin-bottom: 0; }
+      @media (max-width: 900px) { .legal-layout { grid-template-columns: 1fr; } .legal-sidebar { position: static; } }
+      @media (max-width: 640px) { .legal-page { padding-top: 32px; } .legal-section { padding: 22px 18px; } }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header-inner">
+        <a href="index.html" class="brand" aria-label="AllioAI home">
+          <img src="../assets/logo.png" alt="AllioAI logo" class="header-logo" />
+          <span class="brand-name">AllioAI</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="index.html#Features">Features</a>
+          <a href="index.html#Models">Models</a>
+          <a href="index.html#Pricing">Pricing</a>
+          <a href="index.html#FAQ">FAQ</a>
+        </nav>
+        <div class="header-actions">
+          <a href="signin.html" class="header-signin-button">Sign In</a>
+          <a href="app.html" class="header-getstarted-button">Get Started</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="legal-page">
+      <section class="legal-hero">
+        <div class="container">
+          <div class="legal-eyebrow">Legal</div>
+          <h1>Terms and Conditions</h1>
+          <p>Last Updated: September 2, 2026</p>
+        </div>
+      </section>
+
+      <div class="container legal-layout">
+        <aside class="legal-sidebar" aria-label="Terms sections">
+          <p class="legal-sidebar-title">Contents</p>
+          <a href="#about">About AllioAI</a>
+          <a href="#eligibility">Eligibility</a>
+          <a href="#accounts">User Accounts</a>
+          <a href="#acceptable-use">Acceptable Use</a>
+          <a href="#ai-services">AI Services</a>
+          <a href="#user-content">User Content</a>
+          <a href="#subscriptions">Subscriptions</a>
+          <a href="#privacy">Privacy &amp; Security</a>
+          <a href="#liability">Liability</a>
+          <a href="#governing-law">Governing Law</a>
+          <a href="#contact">Contact</a>
+        </aside>
+
+        <article class="legal-content">
+          <section class="legal-section" id="introduction">
+            <h2>Terms and Conditions</h2>
+            <div class="legal-callout">
+              <p>Welcome to <strong>AllioAI</strong>. These Terms and Conditions (“Terms”) govern your access to and use of the AllioAI website, applications, artificial intelligence services, products, features, APIs, and related services (collectively, the “Services”).</p>
+              <p>Please read these Terms carefully. By accessing, registering for, or using our Services, you agree to be bound by them. If you do not agree, you must not access or use AllioAI.</p>
+            </div>
+          </section>
+
+          <section class="legal-section" id="about">
+            <h2>1. About AllioAI</h2>
+            <p>AllioAI is an artificial intelligence platform providing AI-powered tools, conversational systems, content generation features, productivity tools, and related technologies.</p>
+            <p>In these Terms, “we” and “our” refer to AllioAI and its operators; “you” refers to each User; “Services” means all AllioAI products and functionality; “Content” means material submitted, generated, uploaded, transmitted, or displayed; “User Content” means Content submitted by a User; and “Output” means Content generated in response to User input.</p>
+          </section>
+
+          <section class="legal-section" id="eligibility">
+            <h2>2. Eligibility</h2>
+            <p>You may use AllioAI only if you are legally capable of entering into a binding agreement. If you are under the age required to independently consent to online services in your jurisdiction, you may use AllioAI only with required parent or legal guardian permission and supervision.</p>
+            <p>By using the Services, you represent that you are legally permitted to use them, will comply with applicable laws, provide accurate information, and will not violate third-party rights. We may restrict or terminate access where eligibility requirements are not met.</p>
+          </section>
+
+          <section class="legal-section" id="acceptance">
+            <h2>3. Acceptance of These Terms</h2>
+            <p>Creating an account, clicking an acceptance button, accessing the website, or otherwise using the Services confirms that you have read, understood, and agreed to these Terms. Additional policies, subscription terms, and feature-specific conditions may supplement these Terms. If there is a conflict, feature-specific terms may control for that feature.</p>
+          </section>
+
+          <section class="legal-section" id="changes">
+            <h2>4. Changes to These Terms</h2>
+            <p>AllioAI may modify, update, or replace these Terms. For material changes, we may provide notice through the website, application, email, or another reasonable method. Continued use after updated Terms become effective constitutes acceptance. If you do not agree, discontinue use.</p>
+          </section>
+
+          <section class="legal-section" id="accounts">
+            <h2>5. User Accounts</h2>
+            <p>Certain features require an account. You agree to provide accurate registration information, keep credentials secure, maintain password confidentiality, promptly report unauthorized access, and accept responsibility for activity through your account where permitted by law.</p>
+            <p>You must not share credentials to enable unauthorized access, transfer an account without authorization, create false identities, access another User’s account, or circumvent restrictions and security mechanisms. We may suspend or terminate accounts that violate these Terms or create security, legal, or operational risks.</p>
+          </section>
+
+          <section class="legal-section" id="acceptable-use">
+            <h2>6. Acceptable Use</h2>
+            <p>You agree to use AllioAI responsibly and lawfully. You must not use the Services to violate laws, facilitate crime or fraud, infringe intellectual property, or circumvent legal restrictions.</p>
+            <h3>6.1 Harmful Activities</h3>
+            <p>You may not intentionally cause harm to individuals, organizations, systems, or infrastructure, including by facilitating violence, targeted abuse, exploitation of minors, dangerous activities, malware, unauthorized access, privacy violations, or identity theft.</p>
+            <h3>6.2 Platform Abuse</h3>
+            <p>You must not interfere with AllioAI, bypass security controls, reverse engineer protected components where prohibited, scrape without authorization, overload infrastructure, introduce harmful code, disrupt networks, or circumvent rate limits.</p>
+            <h3>6.3 Misrepresentation</h3>
+            <p>You must not impersonate another person or organization deceptively. You are responsible for ensuring AI-generated content does not mislead others regarding its origin where disclosure is legally required.</p>
+          </section>
+
+          <section class="legal-section" id="ai-services">
+            <h2>7. Artificial Intelligence Services</h2>
+            <p>AI systems have inherent limitations. Outputs may be inaccurate, incomplete, outdated, biased, misleading, inappropriate, non-unique, or not independently verified. You are responsible for reviewing and evaluating Outputs before relying on or using them.</p>
+            <p>AllioAI does not guarantee that any Output will be accurate, reliable, complete, original, suitable, or fit for a particular purpose.</p>
+          </section>
+
+          <section class="legal-section" id="professional-advice">
+            <h2>8. No Professional Advice</h2>
+            <p>Content generated through AllioAI is for general informational and educational purposes. AllioAI does not provide legal, medical, financial, investment, tax, psychological, emergency, or other regulated professional services.</p>
+            <p>Consult a qualified professional before making decisions involving significant legal, financial, medical, educational, or personal consequences. Do not rely solely on AI-generated content for high-impact decisions.</p>
+          </section>
+
+          <section class="legal-section" id="user-content">
+            <h2>9. User Content</h2>
+            <p>You retain the intellectual property rights you hold in Content submitted to AllioAI. By submitting User Content, you grant AllioAI a limited, non-exclusive, worldwide license to host, process, reproduce, transmit, and use it as reasonably necessary to provide and maintain the Services, improve functionality where permitted by law and privacy settings, prevent abuse, ensure security, and comply with legal obligations.</p>
+            <p>You represent that you have the rights and permissions necessary to submit your Content and that it does not violate laws or third-party rights.</p>
+          </section>
+
+          <section class="legal-section" id="output">
+            <h2>10. AI-Generated Output</h2>
+            <p>Subject to applicable law and these Terms, you may use Output for lawful purposes. Output may not be unique, may be similar to another User’s Output, may not receive copyright protection, and must be reviewed before publication or use.</p>
+            <p>Where legally permitted, AllioAI assigns to you any rights it may have in Output generated specifically for you, subject to third-party rights and applicable limitations. We make no guarantee regarding ownership, originality, copyrightability, or non-infringement.</p>
+          </section>
+
+          <section class="legal-section" id="intellectual-property">
+            <h2>11. Intellectual Property</h2>
+            <p>The AllioAI branding, logos, website design, software, source code, interfaces, graphics, trademarks, documentation, features, and platform architecture are owned by or licensed to AllioAI and protected by intellectual property laws.</p>
+            <p>Except where expressly permitted, you may not copy our branding, reproduce the platform, create confusingly similar products, use trademarks without permission, redistribute proprietary components, or remove proprietary notices. Nothing in these Terms grants ownership of AllioAI intellectual property.</p>
+          </section>
+
+          <section class="legal-section" id="third-party">
+            <h2>12. Third-Party Services</h2>
+            <p>AllioAI may rely on third-party services, APIs, AI providers, payment processors, hosting providers, analytics platforms, and other technologies. Those services may have their own terms and privacy policies. AllioAI is not responsible for their availability, accuracy, content, policies, or practices. Your use of them is at your own risk.</p>
+          </section>
+
+          <section class="legal-section" id="availability">
+            <h2>13. Availability of Services</h2>
+            <p>We aim to provide reliable access, but uninterrupted or error-free operation cannot be guaranteed. Services may be unavailable due to maintenance, technical issues, security incidents, infrastructure failures, internet disruptions, third-party outages, updates, or improvements. AllioAI may modify, suspend, restrict, or discontinue any part of the Services.</p>
+          </section>
+
+          <section class="legal-section" id="beta">
+            <h2>14. Beta and Experimental Features</h2>
+            <p>Beta, experimental, preview, early-access, and testing features may contain errors, experience interruptions, change substantially, or be discontinued without prior notice. They are provided on an “as available” basis and should not be relied on exclusively for critical operations.</p>
+          </section>
+
+          <section class="legal-section" id="subscriptions">
+            <h2>15. Subscriptions and Paid Services</h2>
+            <p>AllioAI may offer free and paid plans with different features, limits, and access. By purchasing a subscription, you agree to provide accurate payment information and authorize applicable charges. Pricing, features, and plans may change.</p>
+            <p>Unless otherwise stated, fees may recur, taxes may apply, you are responsible for payment obligations, and failed payment may restrict access. Specific billing and cancellation terms may appear during purchase.</p>
+          </section>
+
+          <section class="legal-section" id="refunds">
+            <h2>16. Cancellation and Refunds</h2>
+            <p>You may cancel according to the options provided in your account or purchase platform. Unless required by law or explicitly stated, payments may be non-refundable, partial periods may not be refunded, and cancellation may take effect at the end of the billing period. AllioAI may issue refunds at its discretion. Mandatory consumer rights remain unaffected.</p>
+          </section>
+
+          <section class="legal-section" id="termination">
+            <h2>17. Suspension and Termination</h2>
+            <p>AllioAI may suspend or terminate access if it reasonably believes you violated these Terms or law, present a security risk, harm Users or the platform, engage in fraud, or if required by authorities. Where reasonably possible, notice may be provided. You may stop using AllioAI at any time. Termination does not affect obligations that arose before termination.</p>
+          </section>
+
+          <section class="legal-section" id="privacy">
+            <h2>18. Privacy</h2>
+            <p>Your use of AllioAI is also governed by our <a href="privacy-policy.html" style="color:#c4b5fd;text-decoration:underline;">Privacy Policy</a>, which explains how we may collect, use, store, and protect personal information. By using AllioAI, you acknowledge that you have reviewed it.</p>
+          </section>
+
+          <section class="legal-section" id="security">
+            <h2>19. Data Security</h2>
+            <p>AllioAI takes reasonable measures designed to protect the Services and user information, but no internet service can guarantee absolute security. You are responsible for securing your devices, passwords, and credentials and should avoid submitting highly sensitive information unless explicitly supported.</p>
+          </section>
+
+          <section class="legal-section" id="warranties">
+            <h2>20. Disclaimer of Warranties</h2>
+            <p><strong>To the maximum extent permitted by law, AllioAI provides the Services on an “as is” and “as available” basis.</strong> We do not guarantee availability, error-free operation, accuracy, completeness, currency, suitability, or that the Services meet every User’s requirements. We disclaim express, implied, statutory, and other warranties, including merchantability, fitness for a particular purpose, and non-infringement, to the extent permitted by law.</p>
+          </section>
+
+          <section class="legal-section" id="liability">
+            <h2>21. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, AllioAI and its operators, affiliates, partners, employees, and service providers are not liable for indirect, incidental, special, consequential, or exemplary damages, including loss of data, profits, business interruption, reliance on Output, unauthorized access, service interruptions, errors, inaccuracies, or third-party services.</p>
+            <p>To the maximum extent permitted, total liability arising from your use of the Services will not exceed the amount you paid to AllioAI during the relevant period. Nothing excludes liability that cannot legally be excluded.</p>
+          </section>
+
+          <section class="legal-section" id="indemnification">
+            <h2>22. Indemnification</h2>
+            <p>To the extent permitted by law, you agree to indemnify and hold harmless AllioAI and its operators from claims, liabilities, damages, losses, and expenses arising from your violation of these Terms, unlawful use, violation of third-party rights, submitted Content, or misuse of Output.</p>
+          </section>
+
+          <section class="legal-section" id="feedback">
+            <h2>23. Feedback</h2>
+            <p>If you provide feedback, suggestions, ideas, or recommendations, you grant us permission to use them without compensation or obligation. AllioAI may use feedback to improve current or future products and services.</p>
+          </section>
+
+          <section class="legal-section" id="copyright">
+            <h2>24. Copyright Complaints</h2>
+            <p>AllioAI respects intellectual property rights. Copyright complaints should identify the protected work, allegedly infringing material, your contact information, your relationship to the rights holder, and a good-faith statement. We may investigate valid complaints and take appropriate action.</p>
+          </section>
+
+          <section class="legal-section" id="general">
+            <h2>25. No Waiver</h2>
+            <p>Failure to enforce any provision does not waive that provision or any other provision. Any waiver must be expressly made in writing where required.</p>
+            <h2>26. Severability</h2>
+            <p>If a provision is invalid, unlawful, or unenforceable, the remaining provisions continue to apply. The invalid provision may be modified to the minimum extent necessary to make it enforceable where legally permissible.</p>
+            <h2>27. Force Majeure</h2>
+            <p>AllioAI is not responsible for delays or failures beyond reasonable control, including natural disasters, internet failures, power outages, cybersecurity incidents, government actions, war, civil disturbances, pandemics, or third-party infrastructure failures.</p>
+          </section>
+
+          <section class="legal-section" id="governing-law">
+            <h2>28. Governing Law and Jurisdiction</h2>
+            <p>These Terms are governed by the laws applicable to the entity operating AllioAI, unless mandatory consumer protection laws require otherwise. Disputes are subject to the jurisdiction of competent courts as required by applicable law. Consumer rights that cannot legally be waived remain unaffected.</p>
+            <h2>29. Dispute Resolution</h2>
+            <p>Where permitted, Users are encouraged to contact AllioAI first to resolve disputes informally. If a resolution cannot be reached, either party may pursue remedies available under applicable law.</p>
+          </section>
+
+          <section class="legal-section" id="contact">
+            <h2>30. Entire Agreement</h2>
+            <p>These Terms, together with the Privacy Policy and applicable additional terms, constitute the entire agreement regarding your use of the Services and supersede prior agreements and understandings.</p>
+            <h2>31. Contact Information</h2>
+            <p>If you have questions, concerns, or complaints regarding these Terms, contact AllioAI through the methods made available on our official website.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>Acknowledgment</h2>
+            <div class="legal-callout">
+              <p><strong>By accessing or using AllioAI, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.</strong></p>
+              <p>If you do not agree to these Terms, you must not use the AllioAI Services.</p>
+              <p>© 2026 AllioAI. All rights reserved.</p>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>
