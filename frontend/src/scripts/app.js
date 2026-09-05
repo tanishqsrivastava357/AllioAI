@@ -19,6 +19,8 @@
   const clearSearch = document.querySelector("#clearSearch");
   const accountButton = document.querySelector("#accountButton");
   const recentChatList = document.querySelector("#recentChatList");
+  const thinkingModal = document.querySelector("#thinkingModal");
+  const thinkingSummary = document.querySelector("#thinkingSummary");
   const accountName = document.querySelector("#accountName");
   const accountPlan = document.querySelector("#accountPlan");
   const welcomeName = document.querySelector("#welcomeName");
@@ -238,7 +240,15 @@
     const copyButton = document.createElement("button");
     copyButton.type = "button";
     copyButton.textContent = "Copy";
-    copyButton.addEventListener("click", () => navigator.clipboard.writeText(text));
+    copyButton.addEventListener("click", async () => {
+      await navigator.clipboard.writeText(content.innerText || text);
+      copyButton.textContent = "✓";
+      copyButton.setAttribute("aria-label", "Copied");
+      window.setTimeout(() => {
+        copyButton.textContent = "Copy";
+        copyButton.removeAttribute("aria-label");
+      }, 1600);
+    });
     actions.append(copyButton);
     if (role === "user") {
       const editButton = document.createElement("button");
@@ -298,6 +308,32 @@
     if (wasNearBottom || messages.children.length <= 1) {
       messages.scrollTop = messages.scrollHeight;
     }
+    return { row, body, content };
+  };
+
+  const addThinkingStatus = () => {
+    const status = document.createElement("button");
+    status.type = "button";
+    status.className = "thinking-status";
+    status.textContent = "Thinking...";
+    status.addEventListener("click", () => {
+      thinkingSummary.textContent = "Reviewing your request and preparing a response.";
+      thinkingModal.hidden = false;
+    });
+    messages.append(status);
+    return status;
+  };
+
+  const streamAssistantText = async (text) => {
+    const rendered = addMessage("", "assistant");
+    const characters = Array.from(text);
+    let output = "";
+    for (let index = 0; index < characters.length; index += 8) {
+      output += characters.slice(index, index + 8).join("");
+      rendered.content.innerHTML = renderRichText(output);
+      messages.scrollTop = messages.scrollHeight;
+      await new Promise((resolve) => window.setTimeout(resolve, 12));
+    }
   };
 
   const getAttachmentPayload = async () => {
@@ -323,7 +359,9 @@
     if (!message && !attachment) return;
     const visibleMessage = attachment ? `[Attached file: ${attachment.name}]${message ? `\n${message}` : ""}` : message;
     addMessage(message, "user", attachment);
+    const thinkingStatus = addThinkingStatus();
     if (!authenticated) {
+      thinkingStatus.remove();
       addMessage("Please sign in to send messages.", "assistant");
       return;
     }
@@ -360,10 +398,12 @@
         throw new Error(responseText.trim() || "The server returned an invalid response.");
       }
       if (!messageResponse.ok) throw new Error(messageData.error || "Unable to get an AI response.");
-      if (messageData.assistantMessage) addMessage(messageData.assistantMessage.content, "assistant");
+      thinkingStatus.remove();
+      if (messageData.assistantMessage) await streamAssistantText(messageData.assistantMessage.content);
       await loadConversations();
     } catch (error) {
       console.error(error);
+      thinkingStatus.remove();
       addMessage(error.message, "assistant");
     }
   };
@@ -397,12 +437,18 @@
         addMessage(error.message, "assistant");
         return;
       }
+      homePrompt.value = "";
       if (!activeConversationId) await openChat("New chat", "");
       else showView("chat");
       await sendMessage(prompt, attachment);
-      homePrompt.value = "";
       removeAttachment.click();
     }
+  });
+
+  document.querySelectorAll("[data-close-thinking]").forEach((element) => {
+    element.addEventListener("click", () => {
+      thinkingModal.hidden = true;
+    });
   });
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
