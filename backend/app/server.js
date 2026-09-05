@@ -7,6 +7,7 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const { Pool } = require("pg");
 const { OAuth2Client } = require("google-auth-library");
+const pdfParse = require("pdf-parse");
 
 dotenv.config({ path: path.join(__dirname, "..", ".env") });
 
@@ -18,7 +19,23 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const sessionSecret = process.env.SESSION_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
 const openRouterApiKey = process.env.OPENROUTER_API_KEY;
-const allowedUploadTypes = new Set(["image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf", "text/plain"]);
+const allowedUploadTypes = new Set([
+  "image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf",
+  "text/plain", "text/csv", "text/markdown", "application/json", "application/javascript",
+  "text/javascript", "text/css", "text/html", "application/xml", "text/xml",
+  "application/sql", "text/x-python", "text/x-c", "text/x-c++"
+]);
+const allowedFileExtensions = new Map([
+  [".png", "image/png"], [".jpg", "image/jpeg"], [".jpeg", "image/jpeg"],
+  [".webp", "image/webp"], [".gif", "image/gif"], [".pdf", "application/pdf"],
+  [".txt", "text/plain"], [".csv", "text/csv"], [".md", "text/markdown"],
+  [".markdown", "text/markdown"], [".json", "application/json"], [".js", "text/javascript"],
+  [".mjs", "text/javascript"], [".cjs", "application/javascript"], [".css", "text/css"],
+  [".html", "text/html"], [".htm", "text/html"], [".xml", "application/xml"],
+  [".sql", "application/sql"], [".py", "text/x-python"], [".c", "text/x-c"],
+  [".h", "text/x-c"], [".cpp", "text/x-c++"], [".hpp", "text/x-c++"]
+]);
+const maxExtractedTextLength = 120000;
 const frontendRoot = path.resolve(__dirname, "..", "..", "frontend", "src");
 const googleClient = googleClientId ? new OAuth2Client(googleClientId) : null;
 const modelConfigs = {
@@ -111,7 +128,14 @@ const FREE_LIMITS = { messages: 20, uploads: 3, imageGenerations: 3 };
 
 function hasValidFileSignature(mimeType, data) {
   const bytes = Buffer.from(data, "base64");
-  if (mimeType === "text/plain") return true;
+  if (bytes.subarray(0, 2).toString("ascii") === "MZ" ||
+      bytes.subarray(0, 4).toString("ascii") === "\x7fELF" ||
+      bytes.subarray(0, 4).toString("ascii") === "PK\u0003\u0004") {
+    return false;
+  }
+  if (mimeType.startsWith("text/") || ["application/json", "application/javascript", "application/sql"].includes(mimeType)) {
+    return !bytes.includes(0);
+  }
   if (mimeType === "image/png") return bytes.length >= 8 &&
     bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
   if (mimeType === "image/jpeg") return bytes.length >= 3 &&
@@ -123,6 +147,26 @@ function hasValidFileSignature(mimeType, data) {
     bytes.subarray(8, 12).toString("ascii") === "WEBP";
   if (mimeType === "application/pdf") return bytes.subarray(0, 5).toString("ascii") === "%PDF-";
   return false;
+}
+
+function inferAttachmentMimeType(name, mimeType) {
+  const extension = path.extname(name).toLowerCase();
+  const inferredType = allowedFileExtensions.get(extension);
+  if (!inferredType || !allowedUploadTypes.has(inferredType)) return null;
+  if (!mimeType || mimeType === "application/octet-stream" || mimeType === inferredType) return inferredType;
+  if (mimeType === "text/plain" && inferredType.startsWith("text/")) return inferredType;
+  return null;
+}
+
+async function extractAttachmentText(mimeType, bytes) {
+  if (mimeType === "application/pdf") {
+    const result = await pdfParse(bytes);
+    return result.text.trim().slice(0, maxExtractedTextLength);
+  }
+  if (mimeType.startsWith("text/") || ["application/json", "application/javascript", "application/sql"].includes(mimeType)) {
+    return bytes.toString("utf8").replace(/\u0000/g, "").slice(0, maxExtractedTextLength);
+  }
+  return "";
 }
 
 async function getUsage(userId) {
@@ -155,7 +199,12 @@ async function consumeUsage(userId, subscription, resource) {
 async function generateOpenRouterResponse(config, history, content, attachment = null) {
   if (!openRouterApiKey) throw new Error("OPENROUTER_API_KEY is not configured.");
   const userContent = [
-    ...(attachment ? [{ type: "text", text: `Attached file: ${attachment.name}` }] : []),
+    ...(attachment ? [{
+      type: "text",
+      text: attachment.textContent
+        ? `Attached file: ${attachment.name}\n\nExtracted file content:\n${attachment.textContent}`
+        : `Attached file: ${attachment.name}`
+    }] : []),
     ...(attachment?.mimeType.startsWith("image/") ? [{
       type: "image_url",
       image_url: { url: `data:${attachment.mimeType};base64,${attachment.data}` }
@@ -397,12 +446,14 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     if (typeof attachment.name !== "string" || typeof attachment.mimeType !== "string" || typeof attachment.data !== "string") {
       return res.status(400).json({ error: "Attachment data is incomplete." });
     }
-    if (!allowedUploadTypes.has(attachment.mimeType)) {
-      return res.status(415).json({ error: "This file type is not supported." });
-    }
     if (attachment.name.length > 180 || !/^[A-Za-z0-9._ ()-]+$/.test(attachment.name)) {
       return res.status(400).json({ error: "The file name is invalid." });
     }
+    const normalizedMimeType = inferAttachmentMimeType(attachment.name, attachment.mimeType);
+    if (!normalizedMimeType) {
+      return res.status(415).json({ error: "This file type is not supported. Use an image, PDF, text, CSV, JSON, Markdown, or source file." });
+    }
+    attachment.mimeType = normalizedMimeType;
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(attachment.data) || attachment.data.length % 4 !== 0) {
       return res.status(400).json({ error: "The attachment data is invalid." });
     }
@@ -412,6 +463,12 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     }
     if (!hasValidFileSignature(attachment.mimeType, attachment.data)) {
       return res.status(415).json({ error: "The file contents do not match the selected file type." });
+    }
+    try {
+      attachment.textContent = await extractAttachmentText(attachment.mimeType, attachmentBytes);
+    } catch (error) {
+      console.error("Attachment extraction failed:", error.message);
+      return res.status(415).json({ error: "This file could not be safely read." });
     }
   }
   if (!(await consumeUsage(req.user.id, req.user.subscription || "free", "messages"))) {
