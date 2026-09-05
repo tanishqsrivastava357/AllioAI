@@ -417,7 +417,11 @@ app.post("/api/conversations", requireUser(async (req, res) => {
      RETURNING id, title, created_at AS "createdAt", updated_at AS "updatedAt"`,
     [req.user.id, title || "New conversation"]
   );
-  return res.status(201).json({ conversation: result.rows[0] });
+  const conversation = result.rows[0];
+  if (!conversation) {
+    return res.status(500).json({ error: "The conversation could not be created." });
+  }
+  return res.status(201).json({ conversation });
 }));
 
 app.get("/api/conversations/:id", requireUser(async (req, res) => {

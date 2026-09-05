@@ -314,10 +314,16 @@
           method: "POST",
           credentials: "include",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: (message || attachment.name).slice(0, 60) })
+          body: JSON.stringify({ title: (message || attachment?.name || "New conversation").slice(0, 60) })
         });
-        if (!conversationResponse.ok) throw new Error("Unable to create conversation.");
+        if (!conversationResponse.ok) {
+          const errorData = await conversationResponse.json().catch(() => ({}));
+          throw new Error(errorData.error || "Unable to create conversation.");
+        }
         const conversationData = await conversationResponse.json();
+        if (!conversationData.conversation || typeof conversationData.conversation.id !== "string") {
+          throw new Error("The server returned an invalid conversation.");
+        }
         activeConversationId = conversationData.conversation.id;
         chatTitle.textContent = conversationData.conversation.title;
       }
