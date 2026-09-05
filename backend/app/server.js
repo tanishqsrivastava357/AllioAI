@@ -19,7 +19,10 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const sessionSecret = process.env.SESSION_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
 const geminiApiKey = process.env.GEMINI_API_KEY;
-const groqApiKey = (process.env.GROQ_API_KEY || "").trim().replace(/^(['"])(.*)\1$/, "$2");
+const groqApiKey = (process.env.GROQ_API_KEY || "")
+  .trim()
+  .replace(/^Bearer\s+/i, "")
+  .replace(/^(['"])(.*)\1$/, "$2");
 const groqModel = (process.env.GROQ_MODEL || "qwen/qwen3.6-27b").trim();
 const allowedUploadTypes = new Set([
   "image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf",
@@ -304,9 +307,6 @@ const groqSystemInstruction = `${geminiSystemInstruction} Put each paragraph on 
 
 async function generateGroqResponse(history, content, attachment = null) {
   if (!groqApiKey) throw new Error("GROQ_API_KEY is not configured.");
-  if (!groqApiKey.startsWith("gsk_")) {
-    throw new Error("GROQ_API_KEY is invalid. Vercel must contain the raw Groq key beginning with gsk_.");
-  }
   const userContent = [
     ...(attachment ? [{
       type: "text",
