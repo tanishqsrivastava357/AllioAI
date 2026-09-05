@@ -278,7 +278,7 @@ async function generateOpenRouterImage(prompt) {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${openRouterApiKey}`, "HTTP-Referer": siteUrl, "X-Title": "AllioAI" },
       body: JSON.stringify({
         model: config.imageModel,
-        max_tokens: 2048,
+        max_tokens: 768,
         modalities: ["text", "image"],
         messages: [{ role: "user", content: prompt }]
       })
