@@ -19,11 +19,7 @@ const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const sessionSecret = process.env.SESSION_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
 const geminiApiKey = process.env.GEMINI_API_KEY;
-const groqApiKey = (process.env.GROQ_API_KEY || "")
-  .trim()
-  .replace(/^GROQ_API_KEY\s*=\s*/i, "")
-  .replace(/^Bearer\s+/i, "")
-  .replace(/^(['"])(.*)\1$/, "$2");
+const groqApiKey = normalizeGroqApiKey(process.env.GROQ_API_KEY);
 const groqModel = (process.env.GROQ_MODEL || "qwen/qwen3.6-27b").trim();
 const allowedUploadTypes = new Set([
   "image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf",
@@ -54,6 +50,27 @@ const modelConfigs = {
   "allio-vision": require("./ai/models/vision"),
   "allio-creative": require("./ai/models/creative")
 };
+
+function normalizeGroqApiKey(value) {
+  return String(value || "")
+    .replace(/\\r?\\n/g, "")
+    .replace(/[\r\n\t]/g, "")
+    .trim()
+    .replace(/^GROQ_API_KEY\s*=\s*/i, "")
+    .replace(/^Bearer\s+/i, "")
+    .replace(/^(['"])(.*)\1$/, "$2")
+    .trim();
+}
+
+function groqKeyFingerprint(value) {
+  const normalized = normalizeGroqApiKey(value);
+  return {
+    length: normalized.length,
+    prefix: normalized.slice(0, 4),
+    suffix: normalized.slice(-4),
+    sha256: crypto.createHash("sha256").update(normalized).digest("hex").slice(0, 12)
+  };
+}
 
 if (!googleClientId || !sessionSecret || sessionSecret.length < 32 || !databaseUrl) {
   console.error("Set GOOGLE_CLIENT_ID, DATABASE_URL, and SESSION_SECRET (32+ characters).");
@@ -343,6 +360,9 @@ async function generateGroqResponse(history, content, attachment = null) {
   const data = await response.json();
   if (!response.ok) {
     const providerMessage = data.error?.message || "The selected Groq model could not respond.";
+    if (response.status === 401) {
+      console.error("Groq authentication failed for key fingerprint:", groqKeyFingerprint(groqApiKey));
+    }
     throw new Error(`Groq API (${response.status}): ${providerMessage}`);
   }
   const responseContent = data.choices?.[0]?.message?.content;
