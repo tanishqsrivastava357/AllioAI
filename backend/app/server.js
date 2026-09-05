@@ -199,19 +199,6 @@ async function consumeUsage(userId, subscription, resource) {
   return result.rowCount === 1;
 }
 
-async function releaseUsage(userId, subscription, resource) {
-  if (subscription === "pro") return;
-  const columns = { messages: "messages", uploads: "uploads", imageGenerations: "image_generations" };
-  const column = columns[resource];
-  if (!column) throw new Error("Unknown usage resource.");
-  await pool.query(
-    `UPDATE daily_usage
-     SET ${column} = GREATEST(${column} - 1, 0)
-     WHERE user_id = $1 AND usage_date = CURRENT_DATE`,
-    [userId]
-  );
-}
-
 async function getCrossChatMemory(userId, conversationId) {
   const result = await pool.query(
     `SELECT m.role, m.content
@@ -576,18 +563,12 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
       return res.status(415).json({ error: "This file could not be safely read." });
     }
   }
-  const subscription = req.user.subscription || "free";
-  let messageUsageConsumed = false;
-  let uploadUsageConsumed = false;
-  if (!(await consumeUsage(req.user.id, subscription, "messages"))) {
+  if (!(await consumeUsage(req.user.id, req.user.subscription || "free", "messages"))) {
     return res.status(429).json({ error: "Daily free message limit reached.", code: "MESSAGE_LIMIT_REACHED" });
   }
-  messageUsageConsumed = true;
-  if (hasUpload && !(await consumeUsage(req.user.id, subscription, "uploads"))) {
-    await releaseUsage(req.user.id, subscription, "messages");
+  if (hasUpload && !(await consumeUsage(req.user.id, req.user.subscription || "free", "uploads"))) {
     return res.status(429).json({ error: "Daily free upload limit reached.", code: "UPLOAD_LIMIT_REACHED" });
   }
-  uploadUsageConsumed = hasUpload;
   try {
     const ownership = await pool.query(
       "SELECT id FROM conversations WHERE id = $1 AND user_id = $2",
@@ -632,8 +613,6 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     await pool.query("UPDATE conversations SET updated_at = NOW() WHERE id = $1", [req.params.id]);
     return res.status(201).json({ message: message.rows[0], assistantMessage: assistantMessage.rows[0], model: model.model });
   } catch (error) {
-    if (uploadUsageConsumed) await releaseUsage(req.user.id, subscription, "uploads");
-    if (messageUsageConsumed) await releaseUsage(req.user.id, subscription, "messages");
     console.error(error);
     return res.status(502).json({ error: error.message || "The selected AI model could not respond." });
   }
