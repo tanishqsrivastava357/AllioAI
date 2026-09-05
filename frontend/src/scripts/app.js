@@ -31,6 +31,13 @@
   const attachmentChip = document.querySelector("#attachmentChip");
   const attachmentName = document.querySelector("#attachmentName");
   const removeAttachment = document.querySelector("#removeAttachment");
+  const imageGenerator = document.querySelector("#imageGenerator");
+  const imagePrompt = document.querySelector("#imagePrompt");
+  const imageGenerateButton = document.querySelector("#imageGenerateButton");
+  const imageStatus = document.querySelector("#imageStatus");
+  const generatedImageCard = document.querySelector("#generatedImageCard");
+  const generatedImage = document.querySelector("#generatedImage");
+  const generatedImageLink = document.querySelector("#generatedImageLink");
   let recentChats = [];
   let activeConversationId = null;
   let authenticated = false;
@@ -188,6 +195,47 @@
   clearSearch.addEventListener("click", () => {
     searchInput.value = "";
     renderSearchResults();
+
+    imageGenerator.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const prompt = imagePrompt.value.trim();
+      if (!prompt) {
+        imageStatus.textContent = "Describe the image you want to create.";
+        imagePrompt.focus();
+        return;
+      }
+      imageGenerateButton.disabled = true;
+      imageStatus.textContent = "Generating your image...";
+      generatedImageCard.hidden = true;
+      try {
+        const response = await fetch("/api/images/generate", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt })
+        });
+        const responseText = await response.text();
+        let data;
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          throw new Error(responseText.trim() || "The server returned an invalid response.");
+        }
+        if (!response.ok) throw new Error(data.error || "Unable to generate the image.");
+        if (typeof data.image !== "string" || !/^(https?:\/\/|data:image\/)/i.test(data.image)) {
+          throw new Error("The image model returned an invalid image.");
+        }
+        generatedImage.src = data.image;
+        generatedImageLink.href = data.image;
+        generatedImageCard.hidden = false;
+        imageStatus.textContent = "Image generated successfully.";
+      } catch (error) {
+        console.error(error);
+        imageStatus.textContent = error.message;
+      } finally {
+        imageGenerateButton.disabled = false;
+      }
+    });
     searchInput.focus();
   });
   renderSearchResults();

@@ -284,7 +284,15 @@ async function generateOpenRouterImage(prompt) {
   );
   const data = await response.json();
   if (!response.ok) throw new Error(data.error?.message || "The OpenRouter image model could not respond.");
-  return data.choices?.[0]?.message?.content || "";
+  const message = data.choices?.[0]?.message;
+  const imageUrl = message?.images?.find((image) => image?.image_url?.url)?.image_url?.url;
+  if (imageUrl) return imageUrl;
+  const content = Array.isArray(message?.content)
+    ? message.content.find((part) => part?.type === "image_url" && part.image_url?.url)?.image_url?.url
+      || message.content.map((part) => typeof part === "string" ? part : part?.text || "").join("").trim()
+    : typeof message?.content === "string" ? message.content.trim() : "";
+  if (!content) throw new Error("The image model returned no image.");
+  return content;
 }
 
 async function getAuthenticatedUser(req) {
