@@ -117,17 +117,10 @@
         </section>
         <section class="view" data-view-panel="images">
           <div class="page-heading"><p class="eyebrow">Create</p><h1>Images</h1></div>
-          <form class="image-generator" id="imageGenerator">
-            <label for="imagePrompt">Describe the image you want to create</label>
-            <div class="image-generator-row">
-              <input id="imagePrompt" maxlength="4000" autocomplete="off" placeholder="A cinematic sunrise over a futuristic city...">
-              <button type="submit" id="imageGenerateButton">Generate</button>
-            </div>
-            <p class="image-status" id="imageStatus" aria-live="polite"></p>
-          </form>
-          <div class="generated-image-card" id="generatedImageCard" hidden>
-            <img id="generatedImage" alt="AI-generated result">
-            <a id="generatedImageLink" target="_blank" rel="noopener noreferrer" download="allioai-generated-image">Open image</a>
+          <div class="image-funding-card">
+            <span class="empty-icon" aria-hidden="true">▧</span>
+            <h2>Image generation is temporarily unavailable.</h2>
+            <p>It requires $100 in funding to release image generation.</p>
           </div>
         </section>
         <section class="view" data-view-panel="library"><div class="page-heading"><p class="eyebrow">Your space</p><h1>Library</h1></div><div class="empty-card"><span class="empty-icon">▤</span><h2>This feature hasn't been released yet.</h2><p>Stay tuned. - Tanishq Srivastava</p></div></section>
