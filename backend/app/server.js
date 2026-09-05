@@ -271,19 +271,27 @@ async function generateOpenRouterImage(prompt) {
   if (!openRouterApiKey) throw new Error("OPENROUTER_API_KEY is not configured.");
   const config = modelConfigs["allio-creative"];
   const response = await fetch(
-    "https://openrouter.ai/api/v1/images",
+    "https://openrouter.ai/api/v1/chat/completions",
     {
       method: "POST",
       signal: AbortSignal.timeout(60000),
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${openRouterApiKey}`, "HTTP-Referer": siteUrl, "X-Title": "AllioAI" },
-      body: JSON.stringify({ model: config.imageModel, prompt, n: 1, output_format: "png" })
+      body: JSON.stringify({
+        model: config.imageModel,
+        modalities: ["text", "image"],
+        messages: [{ role: "user", content: prompt }]
+      })
     }
   );
   const data = await response.json();
   if (!response.ok) throw new Error(data.error?.message || "The OpenRouter image model could not respond.");
-  const image = data.data?.[0];
-  if (image?.url) return image.url;
-  if (image?.b64_json) return `data:${image.media_type || "image/png"};base64,${image.b64_json}`;
+  const message = data.choices?.[0]?.message;
+  const image = message?.images?.find((item) => item?.image_url?.url);
+  if (image?.image_url?.url) return image.image_url.url;
+  const contentImage = Array.isArray(message?.content)
+    ? message.content.find((item) => item?.type === "image_url" && item.image_url?.url)
+    : null;
+  if (contentImage?.image_url?.url) return contentImage.image_url.url;
   throw new Error("The image model returned no image.");
 }
 
