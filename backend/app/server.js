@@ -348,6 +348,7 @@ async function generateGroqResponse(history, content, attachment = null) {
     body: JSON.stringify({
       model: groqModel,
       reasoning_effort: "none",
+      max_completion_tokens: 768,
       messages: [
         { role: "system", content: groqSystemInstruction },
         ...history.map((item) => ({
