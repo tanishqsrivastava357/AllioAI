@@ -580,7 +580,8 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
     }
     return res.json({ image: await generateOpenRouterImage(prompt), model: modelConfigs["allio-creative"].imageModel });
   } catch (error) {
-    return next(error);
+    console.error("Image generation failed:", error);
+    return res.status(502).json({ error: error.message || "The image model could not respond." });
   }
 }));
 
