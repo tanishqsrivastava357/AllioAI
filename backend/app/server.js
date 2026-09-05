@@ -347,6 +347,7 @@ async function generateGroqResponse(history, content, attachment = null) {
     },
     body: JSON.stringify({
       model: groqModel,
+      reasoning_effort: "none",
       messages: [
         { role: "system", content: groqSystemInstruction },
         ...history.map((item) => ({
@@ -366,7 +367,9 @@ async function generateGroqResponse(history, content, attachment = null) {
     throw new Error(`Groq API (${response.status}): ${providerMessage}`);
   }
   const responseContent = data.choices?.[0]?.message?.content;
-  const text = typeof responseContent === "string" ? responseContent.trim() : "";
+  const text = typeof responseContent === "string"
+    ? responseContent.replace(/<think>[\s\S]*?<\/think>/gi, "").trim()
+    : "";
   if (!text) throw new Error("The Groq model returned an empty response.");
   return text;
 }
