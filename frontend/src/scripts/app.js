@@ -37,6 +37,7 @@
   let selectedFile = null;
   let speechRecognition = null;
   let speechBaseText = "";
+  let chatLoadVersion = 0;
 
   const escapeHtml = (value) => value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -143,6 +144,7 @@
   };
 
   newChatButton.addEventListener("click", () => {
+    chatLoadVersion += 1;
     activeConversationId = null;
     chatTitle.textContent = "New chat";
     messages.replaceChildren();
@@ -150,7 +152,7 @@
     selectedFile = null;
     attachmentInput.value = "";
     attachmentChip.hidden = true;
-    showView("home");
+    showView("chat");
     homePrompt.focus();
   });
 
@@ -366,6 +368,7 @@
   };
 
   const openChat = async (title, prompt, conversationId = null) => {
+    const loadVersion = ++chatLoadVersion;
     chatTitle.textContent = title;
     messages.replaceChildren();
     activeConversationId = conversationId;
@@ -373,6 +376,7 @@
       const response = await fetch(`/api/conversations/${encodeURIComponent(conversationId)}`, { credentials: "include" });
       if (!response.ok) throw new Error("Unable to load this conversation.");
       const data = await response.json();
+      if (loadVersion !== chatLoadVersion) return;
       data.conversation.messages.forEach((message) => addMessage(message.content, message.role === "user" ? "user" : "assistant"));
     } else if (prompt) {
       addMessage(prompt, "user");
