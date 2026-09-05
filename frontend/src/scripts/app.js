@@ -286,6 +286,9 @@
 
   const getAttachmentPayload = async () => {
     if (!selectedFile) return null;
+    if (selectedFile.size > 3 * 1024 * 1024) {
+      throw new Error("This file is too large. Please choose a file under 3 MB.");
+    }
     const dataUrl = await new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result);
@@ -333,7 +336,13 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: message || "Please analyze the attached file.", model: modelSelect.value, hasUpload: Boolean(attachment), attachment })
       });
-      const messageData = await messageResponse.json();
+      const responseText = await messageResponse.text();
+      let messageData;
+      try {
+        messageData = JSON.parse(responseText);
+      } catch {
+        throw new Error(responseText.trim() || "The server returned an invalid response.");
+      }
       if (!messageResponse.ok) throw new Error(messageData.error || "Unable to get an AI response.");
       if (messageData.assistantMessage) addMessage(messageData.assistantMessage.content, "assistant");
       await loadConversations();
@@ -363,7 +372,13 @@
     event.preventDefault();
     const prompt = homePrompt.value.trim();
     if (prompt || selectedFile) {
-      const attachment = await getAttachmentPayload();
+      let attachment;
+      try {
+        attachment = await getAttachmentPayload();
+      } catch (error) {
+        addMessage(error.message, "assistant");
+        return;
+      }
       if (!activeConversationId) await openChat("New chat", "");
       else showView("chat");
       await sendMessage(prompt, attachment);

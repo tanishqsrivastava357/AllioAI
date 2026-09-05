@@ -35,6 +35,7 @@ const allowedFileExtensions = new Map([
   [".sql", "application/sql"], [".py", "text/x-python"], [".c", "text/x-c"],
   [".h", "text/x-c"], [".cpp", "text/x-c++"], [".hpp", "text/x-c++"]
 ]);
+const maxUploadBytes = 3 * 1024 * 1024;
 const maxExtractedTextLength = 120000;
 const frontendRoot = path.resolve(__dirname, "..", "..", "frontend", "src");
 const googleClient = googleClientId ? new OAuth2Client(googleClientId) : null;
@@ -462,8 +463,8 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
       return res.status(400).json({ error: "The attachment data is invalid." });
     }
     const attachmentBytes = Buffer.from(attachment.data, "base64");
-    if (!attachmentBytes.length || attachmentBytes.length > 7 * 1024 * 1024) {
-      return res.status(413).json({ error: "This file is too large. Please choose a file under 7 MB." });
+    if (!attachmentBytes.length || attachmentBytes.length > maxUploadBytes) {
+      return res.status(413).json({ error: "This file is too large. Please choose a file under 3 MB." });
     }
     if (!hasValidFileSignature(attachment.mimeType, attachment.data)) {
       return res.status(415).json({ error: "The file contents do not match the selected file type." });
