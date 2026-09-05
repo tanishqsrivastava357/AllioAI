@@ -49,8 +49,8 @@ const modelConfigs = {
   "allio-creative": require("./ai/models/creative")
 };
 
-if (!googleClientId || !sessionSecret || sessionSecret.length < 32 || !databaseUrl || (isProduction && !geminiApiKey)) {
-  console.error("Set GOOGLE_CLIENT_ID, DATABASE_URL, SESSION_SECRET (32+ characters), and GEMINI_API_KEY.");
+if (!googleClientId || !sessionSecret || sessionSecret.length < 32 || !databaseUrl) {
+  console.error("Set GOOGLE_CLIENT_ID, DATABASE_URL, and SESSION_SECRET (32+ characters).");
   process.exit(1);
 }
 if (isProduction && (!process.env.SITE_URL || !/^https:\/\/[^/]+$/i.test(siteUrl))) {
