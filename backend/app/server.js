@@ -29,18 +29,23 @@ const modelConfigs = {
   "allio-creative": require("./ai/models/creative")
 };
 
-if (!googleClientId || !sessionSecret || sessionSecret.length < 32 || !databaseUrl) {
+if (!googleClientId || !sessionSecret || sessionSecret.length < 32 || !databaseUrl || (isProduction && !openRouterApiKey)) {
   console.error("Set GOOGLE_CLIENT_ID, DATABASE_URL, and SESSION_SECRET (32+ characters).");
   process.exit(1);
 }
-if (isProduction && !process.env.SITE_URL) {
-  console.warn("SITE_URL is not configured; set it to the public HTTPS origin before production deployment.");
+if (isProduction && (!process.env.SITE_URL || !/^https:\/\/[^/]+$/i.test(siteUrl))) {
+  console.error("SITE_URL must be the exact public HTTPS origin in production.");
+  process.exit(1);
+}
+if (isProduction && process.env.DB_SSL_REJECT_UNAUTHORIZED === "false") {
+  console.error("DB_SSL_REJECT_UNAUTHORIZED=false is not allowed in production.");
+  process.exit(1);
 }
 
 const pool = new Pool({
   connectionString: databaseUrl,
   ssl: isProduction ? {
-    rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false",
+    rejectUnauthorized: true,
     ...(process.env.DB_SSL_CA ? { ca: process.env.DB_SSL_CA.replace(/\\n/g, "\n") } : {})
   } : false,
   max: Number(process.env.DB_POOL_MAX || 10),
@@ -103,6 +108,22 @@ function requireSameOrigin(req, res, next) {
 app.use("/api", requireSameOrigin);
 
 const FREE_LIMITS = { messages: 20, uploads: 3, imageGenerations: 3 };
+
+function hasValidFileSignature(mimeType, data) {
+  const bytes = Buffer.from(data, "base64");
+  if (mimeType === "text/plain") return true;
+  if (mimeType === "image/png") return bytes.length >= 8 &&
+    bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  if (mimeType === "image/jpeg") return bytes.length >= 3 &&
+    bytes.subarray(0, 3).equals(Buffer.from([255, 216, 255]));
+  if (mimeType === "image/gif") return bytes.length >= 6 &&
+    (bytes.subarray(0, 6).toString("ascii") === "GIF87a" || bytes.subarray(0, 6).toString("ascii") === "GIF89a");
+  if (mimeType === "image/webp") return bytes.length >= 12 &&
+    bytes.subarray(0, 4).toString("ascii") === "RIFF" &&
+    bytes.subarray(8, 12).toString("ascii") === "WEBP";
+  if (mimeType === "application/pdf") return bytes.subarray(0, 5).toString("ascii") === "%PDF-";
+  return false;
+}
 
 async function getUsage(userId) {
   const result = await pool.query(
@@ -385,8 +406,12 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     if (!/^[A-Za-z0-9+/]*={0,2}$/.test(attachment.data) || attachment.data.length % 4 !== 0) {
       return res.status(400).json({ error: "The attachment data is invalid." });
     }
-    if (attachment.data.length > 10 * 1024 * 1024) {
+    const attachmentBytes = Buffer.from(attachment.data, "base64");
+    if (!attachmentBytes.length || attachmentBytes.length > 7 * 1024 * 1024) {
       return res.status(413).json({ error: "This file is too large. Please choose a file under 7 MB." });
+    }
+    if (!hasValidFileSignature(attachment.mimeType, attachment.data)) {
+      return res.status(415).json({ error: "The file contents do not match the selected file type." });
     }
   }
   if (!(await consumeUsage(req.user.id, req.user.subscription || "free", "messages"))) {
@@ -459,7 +484,7 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
 }));
 
 app.use((req, res, next) => {
-  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|release|privacy-policy|tnc|google-test)\.html$/);
+  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|release|privacy-policy|tnc)\.html$/);
   if (!match) return next();
   return res.redirect(308, `/${match[1]}${req.url.slice(req.path.length)}`);
 });
