@@ -23,6 +23,8 @@
   const welcomeName = document.querySelector("#welcomeName");
   const accountAvatar = document.querySelector("#accountAvatar");
   const modelSelect = document.querySelector("#modelSelect");
+  const speechButton = document.querySelector("#speechButton");
+  const speechStatus = document.querySelector("#speechStatus");
   const attachmentButton = document.querySelector("#attachmentButton");
   const attachmentInput = document.querySelector("#attachmentInput");
   const attachmentChip = document.querySelector("#attachmentChip");
@@ -32,6 +34,8 @@
   let activeConversationId = null;
   let authenticated = false;
   let selectedFile = null;
+  let speechRecognition = null;
+  let speechBaseText = "";
 
   const escapeHtml = (value) => value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -361,6 +365,52 @@
       removeAttachment.click();
     }
   });
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    speechRecognition = new SpeechRecognition();
+    speechRecognition.continuous = false;
+    speechRecognition.interimResults = true;
+    speechRecognition.lang = navigator.language || "en-US";
+
+    speechRecognition.addEventListener("start", () => {
+      speechBaseText = homePrompt.value.trim();
+      speechButton.classList.add("listening");
+      speechButton.setAttribute("aria-pressed", "true");
+      speechButton.setAttribute("aria-label", "Stop speech input");
+      speechStatus.textContent = "Listening for speech.";
+    });
+    speechRecognition.addEventListener("result", (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0].transcript)
+        .join("");
+      homePrompt.value = `${speechBaseText}${speechBaseText && transcript ? " " : ""}${transcript}`;
+      homePrompt.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+    speechRecognition.addEventListener("end", () => {
+      speechButton.classList.remove("listening");
+      speechButton.setAttribute("aria-pressed", "false");
+      speechButton.setAttribute("aria-label", "Start speech input");
+      speechStatus.textContent = "Speech input complete.";
+      homePrompt.focus();
+    });
+    speechRecognition.addEventListener("error", (event) => {
+      speechButton.classList.remove("listening");
+      speechButton.setAttribute("aria-pressed", "false");
+      speechButton.setAttribute("aria-label", "Start speech input");
+      speechStatus.textContent = event.error === "not-allowed"
+        ? "Microphone permission was denied."
+        : "Speech input is unavailable right now.";
+    });
+    speechButton.addEventListener("click", () => {
+      if (speechButton.getAttribute("aria-pressed") === "true") speechRecognition.stop();
+      else speechRecognition.start();
+    });
+  } else {
+    speechButton.disabled = true;
+    speechButton.title = "Speech input is not supported in this browser.";
+    speechStatus.textContent = "Speech input is not supported in this browser.";
+  }
 
   document.querySelector("#upgradeButton").addEventListener("click", async () => {
     try {

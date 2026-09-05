@@ -84,8 +84,10 @@
                 <option value="allio-vision">AllioGPT 1.0 Vision</option>
                 <option value="allio-creative">AllioGPT 1.0 Creative</option>
               </select>
+              <button class="mic-button" id="speechButton" type="button" aria-label="Start speech input" aria-pressed="false">♩</button>
               <button class="voice-button" type="submit" aria-label="Send message">◉</button>
             </form>
+            <p class="sr-only" id="speechStatus" aria-live="polite"></p>
             <div class="suggestions" aria-label="Suggested prompts">
               <button type="button" data-prompt="Explain a complex topic simply"><span>✦</span> Explain a complex topic</button>
               <button type="button" data-prompt="Help me plan my next project"><span>◒</span> Help me plan a project</button>
