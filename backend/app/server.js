@@ -343,7 +343,7 @@ async function generateGroqResponse(history, content, attachment = null) {
     signal: AbortSignal.timeout(60000),
     headers: {
       "Content-Type": "application/json",
-      Authorization: `******`
+      Authorization: `Bearer ${groqApiKey}`
     },
     body: JSON.stringify({
       model: groqModel,
