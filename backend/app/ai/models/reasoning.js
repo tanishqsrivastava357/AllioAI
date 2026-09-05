@@ -1,3 +1,3 @@
 module.exports = {
-  model: process.env.OPENROUTER_REASONING_MODEL || "deepseek/deepseek-r1-0528"
+  model: process.env.GEMINI_REASONING_MODEL || "gemini-2.5-pro"
 };

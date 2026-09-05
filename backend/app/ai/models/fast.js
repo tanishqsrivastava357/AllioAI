@@ -1,3 +1,3 @@
 module.exports = {
-  model: process.env.OPENROUTER_FAST_MODEL || "google/gemini-2.5-flash"
+  model: process.env.GEMINI_FAST_MODEL || "gemini-2.5-flash-lite"
 };

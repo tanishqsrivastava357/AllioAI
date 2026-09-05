@@ -1,3 +1,3 @@
 module.exports = {
-  model: process.env.OPENROUTER_PRO_MODEL || "google/gemini-2.5-pro"
+  model: process.env.GEMINI_PRO_MODEL || "gemini-2.5-pro"
 };
