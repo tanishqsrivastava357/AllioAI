@@ -21,6 +21,7 @@ const databaseUrl = process.env.DATABASE_URL;
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const groqApiKey = (process.env.GROQ_API_KEY || "")
   .trim()
+  .replace(/^GROQ_API_KEY\s*=\s*/i, "")
   .replace(/^Bearer\s+/i, "")
   .replace(/^(['"])(.*)\1$/, "$2");
 const groqModel = (process.env.GROQ_MODEL || "qwen/qwen3.6-27b").trim();
@@ -340,7 +341,10 @@ async function generateGroqResponse(history, content, attachment = null) {
     })
   });
   const data = await response.json();
-  if (!response.ok) throw new Error(data.error?.message || "The selected Groq model could not respond.");
+  if (!response.ok) {
+    const providerMessage = data.error?.message || "The selected Groq model could not respond.";
+    throw new Error(`Groq API (${response.status}): ${providerMessage}`);
+  }
   const responseContent = data.choices?.[0]?.message?.content;
   const text = typeof responseContent === "string" ? responseContent.trim() : "";
   if (!text) throw new Error("The Groq model returned an empty response.");
