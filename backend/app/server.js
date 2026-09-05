@@ -271,28 +271,20 @@ async function generateOpenRouterImage(prompt) {
   if (!openRouterApiKey) throw new Error("OPENROUTER_API_KEY is not configured.");
   const config = modelConfigs["allio-creative"];
   const response = await fetch(
-    "https://openrouter.ai/api/v1/chat/completions",
+    "https://openrouter.ai/api/v1/images",
     {
       method: "POST",
       signal: AbortSignal.timeout(60000),
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${openRouterApiKey}`, "HTTP-Referer": siteUrl, "X-Title": "AllioAI" },
-      body: JSON.stringify({
-        model: config.imageModel,
-        messages: [{ role: "user", content: prompt }]
-      })
+      body: JSON.stringify({ model: config.imageModel, prompt, n: 1, output_format: "png" })
     }
   );
   const data = await response.json();
   if (!response.ok) throw new Error(data.error?.message || "The OpenRouter image model could not respond.");
-  const message = data.choices?.[0]?.message;
-  const imageUrl = message?.images?.find((image) => image?.image_url?.url)?.image_url?.url;
-  if (imageUrl) return imageUrl;
-  const content = Array.isArray(message?.content)
-    ? message.content.find((part) => part?.type === "image_url" && part.image_url?.url)?.image_url?.url
-      || message.content.map((part) => typeof part === "string" ? part : part?.text || "").join("").trim()
-    : typeof message?.content === "string" ? message.content.trim() : "";
-  if (!content) throw new Error("The image model returned no image.");
-  return content;
+  const image = data.data?.[0];
+  if (image?.url) return image.url;
+  if (image?.b64_json) return `data:${image.media_type || "image/png"};base64,${image.b64_json}`;
+  throw new Error("The image model returned no image.");
 }
 
 async function getAuthenticatedUser(req) {
