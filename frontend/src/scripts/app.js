@@ -4,6 +4,7 @@
   const sidebar = document.querySelector("#sidebar");
   const sidebarToggle = document.querySelector("#sidebarToggle");
   const mobileMenu = document.querySelector("#mobileMenu");
+  const newChatButton = document.querySelector(".new-chat");
   const backdrop = document.querySelector("#sidebarBackdrop");
   const viewPanels = document.querySelectorAll("[data-view-panel]");
   const navItems = document.querySelectorAll("[data-view]");
@@ -140,6 +141,18 @@
     else document.querySelector(".home-view").append(homeComposer);
     if (window.matchMedia("(max-width: 760px)").matches) setSidebar(false);
   };
+
+  newChatButton.addEventListener("click", () => {
+    activeConversationId = null;
+    chatTitle.textContent = "New chat";
+    messages.replaceChildren();
+    homePrompt.value = "";
+    selectedFile = null;
+    attachmentInput.value = "";
+    attachmentChip.hidden = true;
+    showView("home");
+    homePrompt.focus();
+  });
 
   navItems.forEach((item) => item.addEventListener("click", () => showView(item.dataset.view)));
 
