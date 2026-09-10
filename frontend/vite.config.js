@@ -15,6 +15,8 @@ module.exports = defineConfig({
     },
     outDir: "src/scripts",
     emptyOutDir: false,
-    minify: false
+    minify: "esbuild",
+    target: "es2020",
+    sourcemap: false
   }
 });

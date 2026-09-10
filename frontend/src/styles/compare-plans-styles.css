@@ -9,7 +9,7 @@
 .compare-table thead th{background:#181818;color:#fff;font-size:1rem}
 .compare-table thead th:not(:first-child){text-align:center}
 .compare-table thead span{display:block;margin-top:5px;color:#aaa;font-size:.8rem;font-weight:400}
-.compare-table tbody th{color:#fff;font-weight:650}
+.compare-table tbody th{color:#fff;font-weight:800}
 .compare-table tbody td{text-align:center;color:#aaa}
 .compare-table tbody tr:last-child th,.compare-table tbody tr:last-child td{border-bottom:0}
 .compare-table tbody tr{transition:background-color 180ms ease}
