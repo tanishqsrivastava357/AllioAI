@@ -517,11 +517,9 @@
     const response = await fetch("/api/conversations", { credentials: "include" });
     if (!response.ok) return;
     const data = await response.json();
-    recentChats = await Promise.all(data.conversations.map(async (conversation) => {
-      const detailResponse = await fetch(`/api/conversations/${encodeURIComponent(conversation.id)}`, { credentials: "include" });
-      const detail = detailResponse.ok ? await detailResponse.json() : null;
-      const lastMessage = detail && detail.conversation.messages.length ? detail.conversation.messages[detail.conversation.messages.length - 1].content : "No messages yet.";
-      return { ...conversation, preview: lastMessage };
+    recentChats = data.conversations.map((conversation) => ({
+      ...conversation,
+      preview: conversation.preview ?? "No messages yet."
     }));
     recentChatList.replaceChildren();
     recentChats.forEach((chat) => {

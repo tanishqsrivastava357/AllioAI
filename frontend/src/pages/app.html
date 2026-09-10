@@ -7,6 +7,7 @@
   <meta name="description" content="AllioAI workspace for thoughtful conversations, images and projects.">
   <title>Workspace | AllioAI</title>
   <link rel="icon" href="../assets/logo.png" type="image/png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="../styles/app-styles.css">
   <script src="https://cdn.jsdelivr.net/npm/marked@18.0.0/lib/marked.umd.js" integrity="sha384-1aMAiqPR6Jpp2ovDW/Tqre8BoApCC6risqqjCOlv07CLlSNKnh+qFQAillZd53PA" crossorigin="anonymous" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js" integrity="sha384-JEyTNhjM6R1ElGoJns4U2Ln4ofPcqzSsynQkmEc/KGy6336qAZl70tDLufbkla+3" crossorigin="anonymous" defer></script>
@@ -17,7 +18,7 @@
     <aside class="sidebar" id="sidebar" aria-label="Main navigation">
       <div class="sidebar-top">
         <button class="brand-button" id="sidebarToggle" type="button" aria-expanded="false" aria-controls="sidebar">
-          <img src="../assets/logo.png" alt="" width="32" height="32">
+          <img src="../assets/logo.png" alt="" width="32" height="32" decoding="async" fetchpriority="high">
           <span class="brand-name">AllioAI</span>
           <span class="collapse-icon" aria-hidden="true">×</span>
         </button>
