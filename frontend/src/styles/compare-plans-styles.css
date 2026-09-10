@@ -6,9 +6,14 @@
 .compare-table-wrap{overflow-x:auto;border:1px solid #333;border-radius:20px;background:#111;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 .compare-table{width:100%;min-width:720px;border-collapse:collapse;text-align:left}
 .compare-table th,.compare-table td{padding:20px 22px;border-bottom:1px solid #2b2b2b}
+.compare-table thead{position:sticky;top:78px;z-index:3}
 .compare-table thead th{background:#181818;color:#fff;font-size:1rem}
 .compare-table thead th:not(:first-child){text-align:center}
 .compare-table thead span{display:block;margin-top:5px;color:#aaa;font-size:.8rem;font-weight:400}
+.compare-plan-action{display:flex;align-items:center;justify-content:center;min-height:34px;margin:14px auto 0;padding:7px 10px;border:1px solid rgba(168,85,247,.38);border-radius:8px;background:rgba(124,58,237,.1);color:#e9d5ff;font-size:.76rem;font-weight:700;line-height:1.2;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.compare-plan-action:hover{border-color:rgba(34,211,238,.6);background:rgba(34,211,238,.12);transform:translateY(-1px)}
+.compare-plan-action-primary{border-color:transparent;background:linear-gradient(135deg,#7c3aed,#2563eb,#22d3ee);color:#fff}
+.compare-plan-action-primary:hover{background:linear-gradient(135deg,#8b5cf6,#3b82f6,#67e8f9)}
 .compare-table tbody th{color:#fff;font-weight:800}
 .compare-table tbody td{text-align:center;color:#aaa}
 .compare-table tbody tr:last-child th,.compare-table tbody tr:last-child td{border-bottom:0}
@@ -17,6 +22,7 @@
 .compare-footer{padding:0 0 60px;text-align:center}
 .compare-footer a{display:inline-flex}
 @media(max-width:760px){
+  .compare-table thead{top:59px}
   .compare-hero{padding:64px 0 42px}
   .compare-hero h1{font-size:clamp(2.35rem,11vw,3.8rem)}
 }
