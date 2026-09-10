@@ -60,7 +60,7 @@ function SignInButton() {
   const setStatus = (message, isError = false) => {
     if (statusElement) {
       statusElement.textContent = message;
-      statusElement.dataset.state = isError ? "error" : "ready";
+      statusElement.dataset.state = isError ? "error" : (message.includes("Signing") ? "loading" : "ready");
     }
   };
   const redirectAfterSignIn = () => {
