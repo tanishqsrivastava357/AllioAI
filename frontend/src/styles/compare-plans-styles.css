@@ -6,7 +6,6 @@
 .compare-table-wrap{overflow-x:auto;border:1px solid #333;border-radius:20px;background:#111;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 .compare-table{width:100%;min-width:720px;border-collapse:collapse;text-align:left}
 .compare-table th,.compare-table td{padding:20px 22px;border-bottom:1px solid #2b2b2b}
-.compare-table thead{position:sticky;top:78px;z-index:3}
 .compare-table thead th{background:#181818;color:#fff;font-size:1rem}
 .compare-table thead th:not(:first-child){text-align:center}
 .compare-table thead span{display:block;margin-top:5px;color:#aaa;font-size:.8rem;font-weight:400}
@@ -14,6 +13,17 @@
 .compare-plan-action:hover{border-color:rgba(34,211,238,.6);background:rgba(34,211,238,.12);transform:translateY(-1px)}
 .compare-plan-action-primary{border-color:transparent;background:linear-gradient(135deg,#7c3aed,#2563eb,#22d3ee);color:#fff}
 .compare-plan-action-primary:hover{background:linear-gradient(135deg,#8b5cf6,#3b82f6,#67e8f9)}
+.compare-plan-bar{position:fixed;top:var(--compare-bar-top,78px);left:0;right:0;z-index:35;display:none;border-bottom:1px solid rgba(168,85,247,.28);background:rgba(10,10,10,.94);box-shadow:0 12px 30px rgba(0,0,0,.35);backdrop-filter:blur(16px)}
+.compare-plan-bar.is-visible{display:block}
+.compare-plan-bar-scroll{overflow-x:auto}
+.compare-plan-bar-inner{display:grid;grid-template-columns:minmax(180px,1.18fr) repeat(3,minmax(170px,1fr));width:min(1120px,100%);min-width:720px;margin:0 auto}
+.compare-plan-bar-label,.compare-plan-bar-plan{min-height:76px;padding:10px 18px;border-right:1px solid rgba(255,255,255,.08)}
+.compare-plan-bar-label{display:flex;align-items:center;color:#aaa;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.compare-plan-bar-plan{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff;font-size:.95rem;font-weight:800;text-align:center}
+.compare-plan-bar-plan strong{color:#aaa;font-size:.75rem;font-weight:500}
+.compare-plan-bar-plan a{margin-top:5px;padding:5px 9px;border:1px solid rgba(168,85,247,.38);border-radius:7px;color:#e9d5ff;font-size:.7rem;line-height:1.1}
+.compare-plan-bar-plan a:hover{border-color:rgba(34,211,238,.6);background:rgba(34,211,238,.12)}
+.compare-plan-bar-plan .compare-plan-bar-primary{border-color:transparent;background:linear-gradient(135deg,#7c3aed,#2563eb,#22d3ee);color:#fff}
 .compare-table tbody th{color:#fff;font-weight:800}
 .compare-table tbody td{text-align:center;color:#aaa}
 .compare-table tbody tr:last-child th,.compare-table tbody tr:last-child td{border-bottom:0}
@@ -22,7 +32,7 @@
 .compare-footer{padding:0 0 60px;text-align:center}
 .compare-footer a{display:inline-flex}
 @media(max-width:760px){
-  .compare-table thead{top:59px}
   .compare-hero{padding:64px 0 42px}
   .compare-hero h1{font-size:clamp(2.35rem,11vw,3.8rem)}
+  .compare-plan-bar-inner{margin:0}
 }
