@@ -6,10 +6,11 @@ const previewPrompts = [
   "Plan me a trip"
 ];
 
-if (previewPrompt) {
+if (previewPrompt && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   let promptIndex = 0;
 
   window.setInterval(() => {
+    if (document.hidden) return;
     promptIndex = (promptIndex + 1) % previewPrompts.length;
     previewPrompt.classList.add("prompt-leaving");
 

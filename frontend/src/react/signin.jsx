@@ -66,7 +66,11 @@ function SignInButton() {
   const redirectAfterSignIn = () => {
     const destination = window.localStorage.getItem("redirectAfterLogin");
     window.localStorage.removeItem("redirectAfterLogin");
-    window.location.href = destination || "app.html";
+    const safeDestination = typeof destination === "string" &&
+      /^\/?(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+(?:[?#].*)?$/.test(destination)
+      ? destination.replace(/^\//, "")
+      : "app.html";
+    window.location.href = safeDestination;
   };
 
   if (!clientId || clientId.startsWith("REPLACE_")) {

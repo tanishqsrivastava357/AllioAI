@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
   <meta name="description" content="AllioAI workspace for thoughtful conversations, images and projects.">
+  <meta name="robots" content="noindex, nofollow">
   <title>Workspace | AllioAI</title>
   <link rel="icon" href="../assets/logo.png" type="image/png">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -32,7 +33,7 @@
       <div class="sidebar-scroll">
         <nav class="sidebar-nav" aria-label="Workspace">
           <button class="nav-item" type="button" data-view="search"><span class="nav-icon" aria-hidden="true">⌕</span><span>Search</span></button>
-          <button class="nav-item active" type="button" data-view="home"><span class="nav-icon" aria-hidden="true">⌕</span><span>Chat</span></button>
+          <button class="nav-item active" type="button" data-view="home" aria-current="page"><span class="nav-icon" aria-hidden="true">⌕</span><span>Chat</span></button>
           <button class="nav-item" type="button" data-view="images"><span class="nav-icon" aria-hidden="true">▧</span><span>Images</span></button>
           <button class="nav-item" type="button" data-view="library"><span class="nav-icon" aria-hidden="true">▤</span><span>Library</span></button>
           <button class="nav-item" type="button" data-view="plugins"><span class="nav-icon" aria-hidden="true">◇</span><span>Plugins</span></button>
@@ -59,7 +60,7 @@
     <main class="main-content">
       <header class="topbar">
         <button class="mobile-menu" id="mobileMenu" type="button" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
-        <button class="mode-button selected" type="button">Chat</button>
+        <button class="mode-button selected" type="button" aria-pressed="true">Chat</button>
         <button class="upgrade-button" id="upgradeButton" type="button">Upgrade</button>
       </header>
 
@@ -71,7 +72,7 @@
             <form class="composer" id="homeComposer">
               <label class="sr-only" for="homePrompt">Ask AllioAI anything</label>
               <button class="composer-tool" id="attachmentButton" type="button" aria-label="Add attachment">＋</button>
-              <input class="sr-only" id="attachmentInput" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.txt,.csv,.md,.markdown,.json,.js,.mjs,.cjs,.css,.html,.htm,.xml,.sql,.py,.c,.h,.cpp,.hpp">
+              <input class="sr-only" id="attachmentInput" type="file" aria-label="Choose a file to attach" accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.txt,.csv,.md,.markdown,.json,.js,.mjs,.cjs,.css,.html,.htm,.xml,.sql,.py,.c,.h,.cpp,.hpp">
               <span class="attachment-chip" id="attachmentChip" hidden>
                 <span class="attachment-name" id="attachmentName"></span>
                 <button id="removeAttachment" type="button" aria-label="Remove attachment">×</button>

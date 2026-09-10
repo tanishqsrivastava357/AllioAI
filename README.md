@@ -250,7 +250,8 @@ Implemented locally:
 
 - CSP and security headers through Helmet.
 - OpenRouter request timeouts, usage limits, and session cleanup.
-- `robots.txt` and `sitemap.xml` placeholders.
+- SEO metadata, canonical URLs, robots directives, and a sitemap for the
+  `allioai.vercel.app` deployment.
 - Production dependency audit currently reports zero vulnerabilities.
 
 Still provider/configuration dependent:
@@ -261,7 +262,8 @@ Still provider/configuration dependent:
 - Move large uploads to object storage and process them asynchronously.
 - Keep provider request timeouts and AI cost/usage limits enabled.
 - Add automated unit, API, and end-to-end tests.
-- Add complete SEO metadata, `robots.txt`, and a sitemap.
+- Replace the deployment-specific canonical URLs and sitemap host if using a
+  custom domain.
 - Schedule cleanup of expired sessions with your database provider or a
   protected external cron job; Vercel functions are ephemeral.
 - Hashed session tokens in the database
