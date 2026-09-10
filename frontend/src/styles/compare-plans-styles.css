@@ -15,8 +15,7 @@
 .compare-plan-action-primary:hover{background:linear-gradient(135deg,#8b5cf6,#3b82f6,#67e8f9)}
 .compare-plan-bar{position:fixed;top:var(--compare-bar-top,78px);left:0;right:0;z-index:35;display:none;border-bottom:1px solid rgba(168,85,247,.28);background:rgba(10,10,10,.94);box-shadow:0 12px 30px rgba(0,0,0,.35);backdrop-filter:blur(16px)}
 .compare-plan-bar.is-visible{display:block}
-.compare-plan-bar-scroll{overflow-x:auto;scrollbar-width:none}
-.compare-plan-bar-scroll::-webkit-scrollbar{display:none}
+.compare-plan-bar-scroll{overflow-x:auto}
 .compare-plan-bar-inner{display:grid;grid-template-columns:minmax(180px,1.18fr) repeat(3,minmax(170px,1fr));width:min(1120px,100%);min-width:720px;margin:0 auto}
 .compare-plan-bar-label,.compare-plan-bar-plan{height:76px;min-height:76px;padding:8px 14px;border-right:1px solid rgba(255,255,255,.08)}
 .compare-plan-bar-label{display:flex;align-items:center;color:#aaa;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
