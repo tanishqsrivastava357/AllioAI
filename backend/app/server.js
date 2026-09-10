@@ -530,11 +530,10 @@ app.get("/api/auth/github/callback", async (req, res, next) => {
       Authorization: `Bearer ${token.access_token}`,
       "User-Agent": "AllioAI"
     };
-    const [profileResponse, emailsResponse] = await Promise.all([
-      fetch("https://api.github.com/user", { headers: githubHeaders }),
-      fetch("https://api.github.com/user/emails", { headers: githubHeaders })
-    ]);
-    const [profile, emails] = await Promise.all([profileResponse.json(), emailsResponse.json()]);
+    const profileResponse = await fetch("https://api.github.com/user", { headers: githubHeaders });
+    const profile = await profileResponse.json();
+    const emailsResponse = await fetch("https://api.github.com/user/emails", { headers: githubHeaders });
+    const emails = await emailsResponse.json();
     const email = Array.isArray(emails)
       ? emails.find((item) => item.primary && item.verified)?.email || emails.find((item) => item.verified)?.email
       : null;
