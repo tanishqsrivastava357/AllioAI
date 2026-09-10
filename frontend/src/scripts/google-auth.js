@@ -19,11 +19,7 @@ async function handleGoogleSignIn(response) {
     if (!result.ok) throw new Error(data.error || "Google sign-in failed.");
     const destination = window.localStorage.getItem("redirectAfterLogin");
     window.localStorage.removeItem("redirectAfterLogin");
-    const safeDestination = typeof destination === "string" &&
-      /^\/?(?:[A-Za-z0-9._-]+\/)*[A-Za-z0-9._-]+(?:[?#].*)?$/.test(destination)
-      ? destination.replace(/^\//, "")
-      : "app.html";
-    window.location.href = safeDestination;
+    window.location.href = destination || "app.html";
   } catch (error) {
     console.error(error);
     showAuthStatus(error.message, true);

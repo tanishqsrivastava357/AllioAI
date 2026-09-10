@@ -14,10 +14,6 @@
     mainNav.classList.toggle("open", isOpen);
     navToggle.setAttribute("aria-expanded", String(isOpen));
     navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-    if (isOpen) {
-      const firstLink = mainNav.querySelector("a");
-      if (firstLink && window.matchMedia("(max-width: 720px)").matches) firstLink.focus();
-    }
   };
 
   navToggle.addEventListener("click", () => {
@@ -25,28 +21,11 @@
   });
 
   mainNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      setMenuState(false);
-      navToggle.focus();
-    });
+    link.addEventListener("click", () => setMenuState(false));
   });
 
   header.querySelectorAll(".header-actions a").forEach((link) => {
     link.addEventListener("click", () => setMenuState(false));
-  });
-
-  navToggle.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && header.classList.contains("menu-open")) {
-      setMenuState(false);
-      navToggle.focus();
-    }
-  });
-
-  mainNav.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && header.classList.contains("menu-open")) {
-      setMenuState(false);
-      navToggle.focus();
-    }
   });
 
   window.addEventListener("resize", () => {

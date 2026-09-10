@@ -127,35 +127,19 @@
   };
 
   const setSidebar = (open) => {
-    const isMobile = window.matchMedia("(max-width: 760px)").matches;
     sidebar.classList.toggle("expanded", open);
     sidebarToggle.setAttribute("aria-expanded", String(open));
     mobileMenu.setAttribute("aria-expanded", String(open));
-    sidebar.inert = isMobile && !open;
-    sidebar.setAttribute("aria-hidden", String(isMobile && !open));
-    if (open && isMobile) {
-      const firstControl = sidebar.querySelector("button");
-      if (firstControl) firstControl.focus();
-    } else if (!open && isMobile && sidebar.contains(document.activeElement)) {
-      mobileMenu.focus();
-    }
   };
 
   sidebarToggle.addEventListener("click", () => setSidebar(!sidebar.classList.contains("expanded")));
   mobileMenu.addEventListener("click", () => setSidebar(true));
   backdrop.addEventListener("click", () => setSidebar(false));
   accountButton.addEventListener("click", () => setSidebar(true));
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && sidebar.classList.contains("expanded") &&
-        window.matchMedia("(max-width: 760px)").matches) {
-      setSidebar(false);
-    }
-  });
-  setSidebar(false);
 
   const showView = (viewName) => {
     viewPanels.forEach((panel) => panel.classList.toggle("active", panel.dataset.viewPanel === viewName));
-    updateNavState(viewName);
+    document.querySelectorAll(".nav-item").forEach((item) => item.classList.toggle("active", item.dataset.view === viewName));
     if (viewName === "chat") chatComposerSlot.append(homeComposer);
     else document.querySelector(".home-view").append(homeComposer);
     if (window.matchMedia("(max-width: 760px)").matches) setSidebar(false);
@@ -173,15 +157,6 @@
     showView("chat");
     homePrompt.focus();
   });
-
-  const updateNavState = (viewName) => {
-    navItems.forEach((item) => {
-      const selected = item.dataset.view === viewName;
-      item.classList.toggle("active", selected);
-      if (selected) item.setAttribute("aria-current", "page");
-      else item.removeAttribute("aria-current");
-    });
-  };
 
   navItems.forEach((item) => item.addEventListener("click", () => showView(item.dataset.view)));
 
@@ -225,7 +200,7 @@
       document.querySelectorAll(".mode-button").forEach((mode) => {
         const selected = mode === button;
         mode.classList.toggle("selected", selected);
-        mode.setAttribute("aria-pressed", String(selected));
+        mode.setAttribute("aria-selected", String(selected));
       });
     });
   });
@@ -235,23 +210,21 @@
       homePrompt.value = button.dataset.prompt;
       homePrompt.focus();
     });
-  });
 
-  attachmentButton.addEventListener("click", () => attachmentInput.click());
-  attachmentInput.addEventListener("change", () => {
-    selectedFile = attachmentInput.files[0] || null;
-    attachmentName.textContent = selectedFile ? selectedFile.name : "";
-    attachmentChip.hidden = !selectedFile;
-    homePrompt.focus();
+    attachmentButton.addEventListener("click", () => attachmentInput.click());
+    attachmentInput.addEventListener("change", () => {
+      selectedFile = attachmentInput.files[0] || null;
+      attachmentName.textContent = selectedFile ? selectedFile.name : "";
+      attachmentChip.hidden = !selectedFile;
+      homePrompt.focus();
+    });
+    removeAttachment.addEventListener("click", () => {
+      selectedFile = null;
+      attachmentInput.value = "";
+      attachmentChip.hidden = true;
+      homePrompt.focus();
+    });
   });
-  removeAttachment.addEventListener("click", () => {
-    selectedFile = null;
-    attachmentInput.value = "";
-    attachmentChip.hidden = true;
-    homePrompt.focus();
-  });
-
-  updateNavState("home");
 
   const addMessage = (text, role, attachment = null) => {
     const wasNearBottom = messages.scrollHeight - messages.scrollTop - messages.clientHeight < 96;
@@ -476,12 +449,6 @@
     element.addEventListener("click", () => {
       thinkingModal.hidden = true;
     });
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !thinkingModal.hidden) {
-      thinkingModal.hidden = true;
-    }
   });
 
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;

@@ -87,23 +87,13 @@ app.use(helmet({
       frameAncestors: ["'none'"],
       frameSrc: ["https://accounts.google.com"],
       imgSrc: ["'self'", "data:", "blob:", "https:"],
-      manifestSrc: ["'self'"],
-      mediaSrc: ["'none'"],
       objectSrc: ["'none'"],
       scriptSrc: ["'self'", "https://accounts.google.com", "https://cdn.jsdelivr.net"],
-      scriptSrcAttr: ["'none'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https:"],
-      styleSrcAttr: ["'unsafe-inline'"],
-      workerSrc: ["'self'", "blob:"]
+      styleSrc: ["'self'", "'unsafe-inline'", "https:"]
     }
   },
-  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
-  referrerPolicy: { policy: "strict-origin-when-cross-origin" }
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
 }));
-app.use((req, res, next) => {
-  res.setHeader("Permissions-Policy", "camera=(), geolocation=(), microphone=(self)");
-  next();
-});
 app.use(express.json({ limit: "12mb" }));
 app.use(cookieParser());
 app.use("/api/auth", rateLimit({ windowMs: 15 * 60 * 1000, limit: 30 }));
@@ -145,14 +135,8 @@ function requireSameOrigin(req, res, next) {
   if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
   const origin = req.get("origin");
   const host = req.get("host");
-  if (origin) {
-    try {
-      if (new URL(origin).host !== host) {
-        return res.status(403).json({ error: "Request origin is not allowed." });
-      }
-    } catch {
-      return res.status(403).json({ error: "Request origin is not allowed." });
-    }
+  if (origin && new URL(origin).host !== host) {
+    return res.status(403).json({ error: "Request origin is not allowed." });
   }
   return next();
 }

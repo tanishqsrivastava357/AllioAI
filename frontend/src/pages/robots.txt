@@ -1,7 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /app
-Disallow: /signin
-Disallow: /api/
 
 Sitemap: https://allioai.vercel.app/sitemap.xml
