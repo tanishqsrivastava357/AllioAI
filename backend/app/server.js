@@ -530,14 +530,10 @@ app.get("/api/auth/github/callback", async (req, res, next) => {
       Authorization: `Bearer ${token.access_token}`,
       "User-Agent": "AllioAI"
     };
-    const [profileResponse, emailsResponse] = await Promise.all([
-      fetch("https://api.github.com/user", { headers: githubHeaders }),
-      fetch("https://api.github.com/user/emails", { headers: githubHeaders })
-    ]);
-    const [profile, emails] = await Promise.all([
-      profileResponse.json(),
-      emailsResponse.json()
-    ]);
+    const profileResponse = await fetch("https://api.github.com/user", { headers: githubHeaders });
+    const profile = await profileResponse.json();
+    const emailsResponse = await fetch("https://api.github.com/user/emails", { headers: githubHeaders });
+    const emails = await emailsResponse.json();
     const email = Array.isArray(emails)
       ? emails.find((item) => item.primary && item.verified)?.email || emails.find((item) => item.verified)?.email
       : null;
@@ -581,18 +577,8 @@ app.post("/api/auth/logout", async (req, res, next) => {
 
 app.get("/api/conversations", requireUser(async (req, res) => {
   const result = await pool.query(
-    `SELECT c.id, c.title, c.created_at AS "createdAt", c.updated_at AS "updatedAt",
-       CASE WHEN latest.content IS NULL THEN 'No messages yet.' ELSE latest.content END AS preview
-     FROM conversations c
-     LEFT JOIN LATERAL (
-       SELECT m.content
-       FROM messages m
-       WHERE m.conversation_id = c.id
-       ORDER BY m.created_at DESC
-       LIMIT 1
-     ) latest ON TRUE
-     WHERE c.user_id = $1
-     ORDER BY c.updated_at DESC`,
+    `SELECT id, title, created_at AS "createdAt", updated_at AS "updatedAt"
+     FROM conversations WHERE user_id = $1 ORDER BY updated_at DESC`,
     [req.user.id]
   );
   return res.json({ conversations: result.rows });
@@ -677,21 +663,19 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     if (!ownership.rows[0]) {
       return res.status(404).json({ error: "Conversation not found." });
     }
-    const [historyResult, crossChatMemory] = await Promise.all([
-      pool.query(
-        `SELECT role, content FROM messages
-         WHERE conversation_id = $1
-         ORDER BY created_at DESC LIMIT 100`,
-        [req.params.id]
-      ),
-      getCrossChatMemory(req.user.id, req.params.id)
-    ]);
+    const historyResult = await pool.query(
+      `SELECT role, content FROM messages
+       WHERE conversation_id = $1
+       ORDER BY created_at DESC LIMIT 100`,
+      [req.params.id]
+    );
     const history = historyResult.rows.reverse()
       .filter((item) => item.role === "user" || item.role === "assistant")
       .map((item) => ({
         role: item.role === "assistant" ? "model" : "user",
         content: item.content
       }));
+    const crossChatMemory = await getCrossChatMemory(req.user.id, req.params.id);
     const message = await pool.query(
       `INSERT INTO messages (conversation_id, role, content) VALUES ($1, 'user', $2)
        RETURNING id, role, content, created_at AS "createdAt"`,
@@ -748,10 +732,9 @@ app.use((req, res, next) => {
   return res.redirect(308, `/${match[1]}${req.url.slice(req.path.length)}`);
 });
 app.use(express.static(path.join(frontendRoot, "pages"), { extensions: ["html"] }));
-const staticAssetOptions = { etag: true, maxAge: isProduction ? "1h" : 0 };
-app.use("/assets", express.static(path.join(frontendRoot, "assets"), staticAssetOptions));
-app.use("/styles", express.static(path.join(frontendRoot, "styles"), staticAssetOptions));
-app.use("/scripts", express.static(path.join(frontendRoot, "scripts"), staticAssetOptions));
+app.use("/assets", express.static(path.join(frontendRoot, "assets")));
+app.use("/styles", express.static(path.join(frontendRoot, "styles")));
+app.use("/scripts", express.static(path.join(frontendRoot, "scripts")));
 app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) {
     return res.status(404).json({ error: "Service route not found." });
