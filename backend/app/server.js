@@ -638,7 +638,7 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
     if (!(await consumeUsage(req.user.id, req.user.subscription || "free", "imageGenerations"))) {
       return res.status(429).json({ error: "Daily free image generation limit reached.", code: "IMAGE_LIMIT_REACHED" });
     }
-    return res.json({ image: await generateGeminiImage(prompt), model: "AllioAI 3.5 Creative" });
+    return res.json({ image: await generateGeminiImage(prompt), model: "AllioGPT 1.0 Creative" });
   } catch (error) {
     console.error("Image generation failed:", error);
     return res.status(502).json({ error: error.message || "The image model could not respond." });
