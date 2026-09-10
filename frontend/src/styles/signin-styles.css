@@ -441,3 +441,60 @@ a {
     align-items: flex-start;
   }
 }
+/* Monochrome theme */
+:root{--bg:#050505;--panel:#0d0d0d;--panel-strong:#141414;--text:#fff;--muted:#aaa;--line:#2b2b2b;--accent:#c084fc;--success:#fff}
+html,body,.signin-page,.signin-shell{background:#000;color:#fff}
+button,a,.signin-button,.google-button{border-color:#fff;background:#000;color:#fff}
+button:hover,a:hover,.signin-button:hover,.google-button:hover{background:#fff;color:#000}
+*,*::before,*::after{border-color:#333}
+body{filter:none}
+
+/* Restored restrained sign-in accents */
+html,body{background:
+  radial-gradient(circle at 8% 10%, rgba(124,58,237,.08), transparent 28%),
+  radial-gradient(circle at 92% 88%, rgba(168,85,247,.04), transparent 24%),
+  linear-gradient(180deg,#050505 0%,#0a0a0a 100%);
+}
+.page-shell{background:rgba(10,10,10,.96);border-color:rgba(167,139,250,.16)}
+.brand-panel{background:
+  linear-gradient(180deg,rgba(5,5,5,.78),rgba(12,12,12,.98)),
+  radial-gradient(circle at 20% 15%,rgba(124,58,237,.12),transparent 28%),
+  radial-gradient(circle at 80% 25%,rgba(168,85,247,.05),transparent 28%);
+}
+.brand-logo{box-shadow:0 0 22px rgba(124,58,237,.22)}
+.hero-badge{background:rgba(124,58,237,.1);border-color:rgba(168,85,247,.28);color:#e9d5ff}
+.hero-copy .gradient{background:linear-gradient(135deg,#d8b4fe 0%,#b784e8 52%,#8f65bd 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.preview-card{border-color:rgba(168,85,247,.2);background:rgba(17,17,17,.9);box-shadow:0 18px 40px rgba(0,0,0,.3)}
+.preview-tag{color:#d8b4fe}
+.form-panel{background:rgba(7,7,7,.86)}
+.auth-card{background:rgba(14,14,14,.96);border-color:rgba(196,181,253,.16);box-shadow:0 28px 70px rgba(0,0,0,.55),0 0 0 1px rgba(124,58,237,.05)}
+.eyebrow{color:#c4b5fd}
+.auth-status[data-tone="success"]{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:#bbf7d0}
+.auth-status[data-tone="error"]{background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.3);color:#fecaca}
+.auth-status[data-tone="warning"]{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fde68a}
+.signup-text a{color:#c4b5fd}
+
+.signin-card, .google-button, .signin-button, .google-fallback-button {
+  transition: transform 240ms cubic-bezier(.22, 1, .36, 1), border-color 220ms ease, box-shadow 240ms ease, background-color 220ms ease;
+}
+
+.signin-card {
+  animation: signin-reveal 560ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.signin-button:hover, .google-button:hover, .google-fallback-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .35);
+}
+
+@keyframes signin-reveal {
+  from { opacity: 0; transform: translateY(12px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

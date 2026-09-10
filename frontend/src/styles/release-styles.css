@@ -44,3 +44,86 @@
   .release-known-issues{margin:22px 17px 18px}
   .release-card{border-radius:20px}
 }
+
+body{background:#000;color:#fff}
+.release-page{background:#000}
+.release-card{border-color:rgba(255,255,255,.12);background:#101010}
+.release-card::before{background:#2a2a2a}
+.release-version{color:#22d3ee}
+.release-list summary::after,.release-version-item summary::after{color:#fff}
+.release-version-item:hover{border-color:#4a4a4a;background:#171717}
+.release-version-item[open] summary{background:#181818}
+.release-section li::marker{color:#22d3ee}
+.release-footer a{border-color:#fff;background:#000;color:#fff}
+.release-footer a:hover{background:#fff;color:#000}
+.release-eyebrow,.release-version,.release-section li::marker{color:#fff}
+.release-eyebrow::before,.release-eyebrow::after,.release-card::before{background:#fff}
+.release-card,.release-version-item,.release-known-issues{border-color:#333;background:#111}
+.release-version-item:hover,.release-version-item[open] summary{border-color:#555;background:#181818}
+.release-footer a{color:#fff}
+body{filter:none;background:#000}
+.release-card>.release-list+.release-list{margin-top:10px;border-top:1px solid #333}
+
+/* Keep release notes black while using version and interaction accents. */
+.release-eyebrow{color:#c4b5fd}
+.release-eyebrow::before,.release-eyebrow::after,.release-card::before{background:linear-gradient(90deg,transparent,#a78bfa,transparent)}
+.release-card{border-color:rgba(168,85,247,.22);background:#0d0d0d}
+.release-version-item,.release-known-issues{border-color:rgba(96,165,250,.18);background:#101010}
+.release-version-item:hover{border-color:rgba(168,85,247,.42);background:#15121c}
+.release-version-item[open] summary{border-color:rgba(168,85,247,.22);background:rgba(124,58,237,.1)}
+.release-list summary::after,.release-version-item summary::after,.release-version{color:#c4b5fd}
+.release-section li::marker{color:#22d3ee}
+.release-footer a{border-color:rgba(168,85,247,.38);background:rgba(124,58,237,.1);color:#d8b4fe}
+.release-footer a:hover{background:rgba(124,58,237,.22);color:#fff}
+
+/* Production motion system */
+.release-card, .release-version-item, .release-footer a {
+  transition:
+    transform 260ms cubic-bezier(.22, 1, .36, 1),
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 260ms ease;
+}
+
+.release-card:hover {
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .45);
+}
+
+.release-version-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+}
+
+.release-version-item summary {
+  transition: padding 220ms ease, background-color 220ms ease;
+}
+
+.release-version-item summary::after {
+  transition: transform 260ms cubic-bezier(.22, 1, .36, 1), color 180ms ease;
+}
+
+.release-version-item summary:hover::after {
+  transform: translateY(1px) scale(1.15);
+}
+
+.release-version-item[open] summary:hover::after {
+  transform: rotate(180deg) translateY(1px) scale(1.15);
+}
+
+.release-section li {
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.release-section li:hover {
+  transform: translateX(4px);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}

@@ -109,3 +109,24 @@ body
     left: auto;
     color: #FFFFFF;
 }
+/* Monochrome theme */
+html,body{background:#000;color:#fff}
+*,*::before,*::after{border-color:#333}
+a,a:hover{color:#fff}
+body{filter:grayscale(1)}
+
+.privacy-container, .privacy-card, .policy-section {
+  transition: transform 240ms cubic-bezier(.22, 1, .36, 1), border-color 220ms ease, box-shadow 240ms ease;
+}
+
+.privacy-card:hover, .policy-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, .32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

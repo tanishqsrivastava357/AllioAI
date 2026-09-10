@@ -11,40 +11,43 @@
       .legal-hero { position: relative; padding: 42px 0 24px; }
       .legal-hero::before {
         content: ""; position: absolute; inset: 0; pointer-events: none;
-        background: radial-gradient(circle at 20% 15%, rgba(124,58,237,.22), transparent 28%),
-          radial-gradient(circle at 78% 10%, rgba(34,211,238,.18), transparent 26%);
+        background: radial-gradient(circle at 20% 15%, rgba(124,58,237,.12), transparent 28%),
+          radial-gradient(circle at 78% 10%, rgba(34,211,238,.08), transparent 26%);
       }
       .legal-hero .container { position: relative; z-index: 1; }
       .legal-eyebrow {
         display: inline-flex; padding: 9px 16px; margin-bottom: 18px;
         border: 1px solid rgba(255,255,255,.08); border-radius: 999px;
-        background: rgba(255,255,255,.04); color: #dfe7ff;
+        background: rgba(255,255,255,.05); color: #ddd6fe;
         font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
       }
       .legal-hero h1 { margin: 0; font-size: clamp(2.4rem,5vw,4.3rem); letter-spacing: -.06em; line-height: 1.05; }
-      .legal-hero p { margin: 16px 0 0; color: #b6bfce; font-size: 1.02rem; }
+      .legal-hero p { margin: 16px 0 0; color: #b8b8c7; font-size: 1.02rem; }
       .legal-layout { display: grid; grid-template-columns: minmax(220px,280px) minmax(0,1fr); gap: 28px; align-items: start; }
       .legal-sidebar {
         position: sticky; top: 102px; padding: 20px 18px;
         border: 1px solid rgba(255,255,255,.08); border-radius: 18px;
-        background: rgba(11,16,27,.72); box-shadow: 0 20px 45px rgba(0,0,0,.2);
+        background: rgba(17,17,24,.92); box-shadow: 0 20px 45px rgba(0,0,0,.2), 0 0 0 1px rgba(124,58,237,.08);
       }
-      .legal-sidebar-title { margin: 0 0 16px; color: #f5f7ff; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
-      .legal-sidebar a { display: block; padding: 9px 12px; margin-bottom: 4px; border-radius: 10px; color: #c7d1e6; transition: background .2s ease, color .2s ease, transform .2s ease; }
-      .legal-sidebar a:hover, .legal-sidebar a:focus-visible { background: rgba(124,58,237,.12); color: #fff; transform: translateX(2px); }
+      .legal-sidebar-title { margin: 0 0 16px; color: #f5f3ff; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+      .legal-sidebar a { display: block; padding: 9px 12px; margin-bottom: 4px; border-radius: 10px; color: #c4b5fd; transition: background .2s ease, color .2s ease, transform .2s ease; }
+      .legal-sidebar a:hover, .legal-sidebar a:focus-visible { background: rgba(124,58,237,.16); color: #fff; transform: translateX(2px); }
+      .legal-sidebar a.active { background: #fff; color: #000; font-weight: 700; box-shadow: 0 8px 18px rgba(0,0,0,.25); }
       .legal-content { display: grid; gap: 22px; }
       .legal-section {
         padding: 28px 30px; border: 1px solid rgba(255,255,255,.08); border-radius: 22px;
-        background: rgba(17,24,39,.78); box-shadow: 0 20px 50px rgba(0,0,0,.18);
+        background: rgba(17,17,17,.94); box-shadow: 0 20px 50px rgba(0,0,0,.18);
       }
       .legal-section h2 { margin: 0 0 16px; font-size: clamp(1.35rem,3vw,2rem); letter-spacing: -.04em; }
-      .legal-section h3 { margin: 22px 0 8px; color: #f5f7ff; font-size: 1.08rem; }
-      .legal-section p, .legal-section li { color: #d6ddec; font-size: 1rem; line-height: 1.8; }
+      .legal-section h3 { margin: 22px 0 8px; color: #f5f3ff; font-size: 1.08rem; }
+      .legal-section p, .legal-section li { color: #d0d0d8; font-size: 1rem; line-height: 1.8; }
       .legal-section p { margin: 0 0 14px; }
       .legal-section ul, .legal-section ol { margin: 0 0 16px; padding-left: 22px; }
       .legal-section strong { color: #f5f7ff; }
-      .legal-callout { padding: 18px 20px; border: 1px solid rgba(124,58,237,.22); border-radius: 14px; background: rgba(124,58,237,.08); }
+      .legal-callout { padding: 18px 20px; border: 1px solid rgba(124,58,237,.32); border-radius: 14px; background: rgba(124,58,237,.1); }
       .legal-callout p:last-child { margin-bottom: 0; }
+      body { filter: none; }
+      .legal-section h2::before { color: #22d3ee; content: "✦ "; font-size: .7em; }
       @media (max-width: 900px) { .legal-layout { grid-template-columns: 1fr; } .legal-sidebar { position: static; } }
       @media (max-width: 640px) { .legal-page { padding-top: 32px; } .legal-section { padding: 22px 18px; } }
     </style>
@@ -98,7 +101,7 @@
           <section class="legal-section" id="introduction">
             <h2>Terms and Conditions</h2>
             <div class="legal-callout">
-              <p>Welcome to <strong>AllioAI</strong>. These Terms and Conditions (“Terms”) govern your access to and use of the AllioAI website, applications, artificial intelligence services, products, features, APIs, and related services (collectively, the “Services”).</p>
+              <p>Welcome to <strong>AllioAI</strong>. These Terms and Conditions (“Terms”) govern your access to and use of the AllioAI website, applications, artificial intelligence services, products, features, integrations, and related services (collectively, the “Services”).</p>
               <p>Please read these Terms carefully. By accessing, registering for, or using our Services, you agree to be bound by them. If you do not agree, you must not access or use AllioAI.</p>
             </div>
           </section>
@@ -174,7 +177,7 @@
 
           <section class="legal-section" id="third-party">
             <h2>12. Third-Party Services</h2>
-            <p>AllioAI may rely on third-party services, APIs, AI providers, payment processors, hosting providers, analytics platforms, and other technologies. Those services may have their own terms and privacy policies. AllioAI is not responsible for their availability, accuracy, content, policies, or practices. Your use of them is at your own risk.</p>
+            <p>AllioAI may rely on third-party services, technology providers, payment processors, hosting providers, analytics platforms, and other technologies. Those services may have their own terms and privacy policies. AllioAI is not responsible for their availability, accuracy, content, policies, or practices. Your use of them is at your own risk.</p>
           </section>
 
           <section class="legal-section" id="availability">
@@ -273,5 +276,6 @@
         </article>
       </div>
     </main>
+    <script src="../scripts/legal-scrollspy.js" defer></script>
   </body>
 </html>

@@ -1,1 +1,42 @@
 .contact-page{padding:56px 0 84px}.contact-hero{position:relative;padding:46px 0 42px}.contact-hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 18% 12%,rgba(124,58,237,.24),transparent 30%),radial-gradient(circle at 82% 8%,rgba(34,211,238,.16),transparent 28%)}.contact-hero .container{position:relative;z-index:1}.contact-eyebrow{display:inline-flex;padding:9px 16px;margin-bottom:18px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.04);color:#dfe7ff;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}.contact-hero h1{max-width:760px;margin:0;font-size:clamp(2.5rem,6vw,5rem);line-height:1;letter-spacing:-.07em}.contact-hero h1 span{background:linear-gradient(135deg,#a855f7,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}.contact-hero p{max-width:650px;margin:20px 0 0;color:#b6bfce;font-size:1.08rem;line-height:1.8}.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:1000px;margin:0 auto}.contact-card{display:flex;flex-direction:column;padding:25px;border:1px solid rgba(255,255,255,.08);border-radius:20px;background:rgba(17,24,39,.78);box-shadow:0 20px 50px rgba(0,0,0,.16)}.contact-card h2{margin:0 0 8px;color:#f5f7ff;font-size:1.2rem;letter-spacing:-.03em}.contact-card p{margin:0 0 18px;color:#bfc9da;line-height:1.7}.contact-card a{align-self:flex-start;margin-top:auto;color:#c4b5fd;font-weight:700;text-decoration:none}.contact-card a:hover,.contact-card a:focus-visible{color:#67e8f9;text-decoration:underline}.contact-actions{display:flex;flex-wrap:wrap;gap:12px;max-width:1000px;margin:22px auto 0}.contact-action{display:inline-flex;align-items:center;justify-content:center;padding:12px 17px;border:1px solid rgba(255,255,255,.1);border-radius:11px;background:rgba(255,255,255,.04);color:#f5f7ff;font-weight:700;text-decoration:none}.contact-action.primary{border-color:rgba(139,92,246,.55);background:linear-gradient(135deg,#7c3aed,#2563eb)}.contact-action:hover,.contact-action:focus-visible{transform:translateY(-1px);filter:brightness(1.08)}.contact-note{max-width:1000px;margin:22px auto 0;padding:17px 19px;border:1px solid rgba(34,211,238,.18);border-radius:14px;background:rgba(34,211,238,.06);color:#cbd5e1;line-height:1.7}.contact-note strong{color:#f5f7ff}@media(max-width:700px){.contact-page{padding-top:32px}.contact-grid{grid-template-columns:1fr}.contact-card{padding:21px}.contact-actions{display:grid}.contact-action{width:100%}}
+.contact-hero::before{background:none}
+.contact-hero h1 span{background:none;color:#fff}
+.contact-card,.contact-action,.contact-action.primary,.contact-note{background:#111;color:#fff;border-color:#333}
+.contact-card a,.contact-action{color:#fff}
+.contact-card a:hover,.contact-card a:focus-visible,.contact-action:hover,.contact-action:focus-visible{background:#fff;color:#000}
+body{filter:grayscale(1)}
+
+/* Keep the help/contact page dark while restoring restrained product accents. */
+body{filter:none;background:#000}
+.contact-hero::before{background:radial-gradient(circle at 18% 12%,rgba(124,58,237,.14),transparent 30%),radial-gradient(circle at 82% 8%,rgba(34,211,238,.08),transparent 28%)}
+.contact-eyebrow{border-color:rgba(168,85,247,.28);background:rgba(124,58,237,.1);color:#e9d5ff}
+.contact-hero h1 span{background:linear-gradient(135deg,#d8b4fe,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact-card{background:#0d0d0d;border-color:rgba(168,85,247,.18)}
+.contact-card h2{color:#f5f3ff}
+.contact-card a{color:#c4b5fd}
+.contact-card a:hover,.contact-card a:focus-visible{color:#67e8f9;background:transparent}
+.contact-action{background:#111;color:#f5f3ff;border-color:rgba(96,165,250,.24)}
+.contact-action.primary{background:linear-gradient(135deg,#5b21b6,#7c3aed);border-color:rgba(192,132,252,.5)}
+.contact-action:hover,.contact-action:focus-visible{background:#181226;color:#fff}
+.contact-action.primary:hover,.contact-action.primary:focus-visible{background:linear-gradient(135deg,#6d28d9,#8b5cf6);color:#fff}
+
+.contact-card, .contact-action {
+  transition: transform 240ms cubic-bezier(.22, 1, .36, 1), border-color 220ms ease, box-shadow 240ms ease, background-color 220ms ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: #555;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .4);
+}
+
+.contact-action:hover {
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}

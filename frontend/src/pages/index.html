@@ -39,7 +39,7 @@
       <section class="hero">
         <div class="container hero-inner">
           <div class="hero-copy">
-            <div class="eyebrow">AllioGPT 1.0 — Now with Vision and Reasoning</div>
+            <div class="eyebrow">AllioAI 3.5 — Now with Vision and Reasoning</div>
 
             <h1 class="headline">
               <span class="headline-light">Meet</span>
@@ -70,7 +70,9 @@
             </div>
             <div class="app-preview-body">
               <p class="preview-label">What can I help you with?</p>
-              <div class="preview-search" tabindex="0" aria-label="Ask AllioAI">Ask AllioAI</div>
+              <div class="preview-search" tabindex="0" aria-label="Example prompt">
+                <span id="previewPrompt" aria-live="polite">Explain stock market</span>
+              </div>
             </div>
           </div>
         </div>
@@ -129,31 +131,31 @@
           <div class="model-grid">
             <article class="model-card">
               <span class="model-pill speed">Speed</span>
-              <h4>AllioGPT 1.0 Fast</h4>
+              <h4>AllioAI 3.5 Fast</h4>
               <p>Fast responses for everyday questions.</p>
             </article>
 
             <article class="model-card featured">
               <span class="model-pill default">Default</span>
-              <h4>AllioGPT 1.0 Pro</h4>
+              <h4>AllioAI 3.5</h4>
               <p>Balanced intelligence for most tasks.</p>
             </article>
 
             <article class="model-card">
               <span class="model-pill logic">Logic</span>
-              <h4>AllioGPT 1.0 Reasoning</h4>
+              <h4>AllioAI 3.5 Reasoning</h4>
               <p>Advanced reasoning for complex work.</p>
             </article>
 
             <article class="model-card">
               <span class="model-pill vision">Vision</span>
-              <h4>AllioGPT 1.0 Vision</h4>
+              <h4>AllioAI 3.5 Vision</h4>
               <p>Image understanding and multimodal analysis.</p>
             </article>
 
             <article class="model-card">
               <span class="model-pill creator">Creator</span>
-              <h4>AllioGPT 1.0 Creative</h4>
+              <h4>AllioAI 3.5 Creative</h4>
               <p>Writing, storytelling, and rich visual ideation.</p>
             </article>
           </div>
@@ -201,6 +203,9 @@
               </ul>
               <a href="contact.html" class="card-btn">Contact Sales</a>
             </article>
+          </div>
+          <div class="pricing-compare-action">
+            <a href="compare-plans.html" class="secondary-btn">Compare Plans</a>
           </div>
         </div>
       </section>
@@ -268,6 +273,7 @@
       </div>
     </div>
 
+    <script src="../scripts/home.js" defer></script>
     <script>
       const navToggle = document.querySelector('.nav-toggle');
       const mainNav = document.querySelector('.main-nav');

@@ -1,12 +1,12 @@
 ﻿:root {
-  --bg: #0a0c14;
-  --bg-2: #101827;
-  --panel: rgba(17, 24, 39, 0.9);
-  --panel-strong: rgba(22, 30, 46, 0.96);
-  --surface: rgba(255, 255, 255, 0.03);
-  --text: #f5f7ff;
-  --muted: #b6bfce;
-  --line: rgba(255, 255, 255, 0.1);
+  --bg: #000000;
+  --bg-2: #0b0b0b;
+  --panel: #101010;
+  --panel-strong: #171717;
+  --surface: rgba(255, 255, 255, 0.04);
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+  --line: rgba(255, 255, 255, 0.08);
   --purple: #7c3aed;
   --purple-2: #a855f7;
   --blue: #2563eb;
@@ -29,10 +29,7 @@ html {
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background:
-    radial-gradient(circle at top left, rgba(124, 58, 237, 0.16), transparent 30%),
-    radial-gradient(circle at top right, rgba(34, 211, 238, 0.12), transparent 28%),
-    linear-gradient(180deg, var(--bg) 0%, #0e1220 100%);
+  background: #000;
   color: var(--text);
   line-height: 1.5;
   overflow-x: hidden;
@@ -363,6 +360,30 @@ button {
   color: #b9bfd0;
   font-size: 1rem;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+
+#previewPrompt {
+  display: block;
+  will-change: transform, opacity;
+}
+
+#previewPrompt.prompt-leaving {
+  animation: prompt-slide-out 260ms cubic-bezier(.6, 0, .8, .2) both;
+}
+
+#previewPrompt.prompt-entering {
+  animation: prompt-slide-in 520ms cubic-bezier(.22, 1, .36, 1) both;
+}
+
+@keyframes prompt-slide-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-115%); }
+}
+
+@keyframes prompt-slide-in {
+  from { opacity: 0; transform: translateY(115%); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .section {
@@ -489,6 +510,12 @@ button {
 
 .pricing-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pricing-compare-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
 }
 
 .pricing-card {
@@ -763,6 +790,169 @@ button {
     position: relative;
   }
 
+  /* Monochrome theme */
+  :root {
+    --bg: #000;
+    --bg-2: #000;
+    --panel: #111;
+    --panel-strong: #181818;
+    --surface: #0b0b0b;
+    --text: #fff;
+    --muted: #aaa;
+    --line: #333;
+    --purple: #fff;
+    --purple-2: #fff;
+    --blue: #fff;
+    --cyan: #fff;
+    --pink: #fff;
+    --green: #fff;
+    --white: #fff;
+    --shadow: 0 25px 60px rgba(0,0,0,.7);
+  }
+
+  body,
+  .main-nav,
+  .header,
+  .footer,
+  .feature-card,
+  .model-card,
+  .pricing-card,
+  .faq-item,
+  .app-preview,
+  .contact-card,
+  .contact-action,
+  .contact-note {
+    background: #000;
+    color: #fff;
+  }
+
+  a,
+  .header-signin-button,
+  .header-getstarted-button,
+  .primary-btn,
+  .secondary-btn,
+  .card-btn,
+  .contact-card a,
+  .contact-action,
+  .contact-action.primary {
+    border-color: #fff;
+    background: #000;
+    color: #fff;
+  }
+
+  a:hover,
+  .header-signin-button:hover,
+  .header-getstarted-button:hover,
+  .primary-btn:hover,
+  .secondary-btn:hover,
+  .card-btn:hover,
+  .contact-card a:hover,
+  .contact-action:hover,
+  .contact-action.primary:hover {
+    background: #fff;
+    color: #000;
+  }
+
+  *, *::before, *::after {
+    border-color: #333;
+  }
+
+  body {
+    filter: grayscale(1);
+  }
+
+  /* Production motion system */
+  :where(a, button, input, select, .feature-card, .model-card, .pricing-card, .faq-item, .app-preview, .contact-card, .contact-action) {
+    transition:
+      transform 220ms cubic-bezier(.22, 1, .36, 1),
+      background-color 220ms ease,
+      border-color 220ms ease,
+      box-shadow 220ms ease,
+      color 180ms ease,
+      opacity 180ms ease;
+  }
+
+  :where(a, button):not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  :where(a, button):not(:disabled):active {
+    transform: translateY(0) scale(.97);
+    transition-duration: 90ms;
+  }
+
+  :where(a, button, input, select):focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 4px;
+    transition: outline-offset 160ms ease;
+  }
+
+  .header-logo {
+    transition: transform 360ms cubic-bezier(.22, 1, .36, 1), filter 360ms ease;
+  }
+
+  .brand:hover .header-logo {
+    transform: rotate(-5deg) scale(1.08);
+    filter: brightness(1.18);
+  }
+
+  .main-nav a {
+    position: relative;
+  }
+
+  .main-nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -7px;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 240ms cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .main-nav a:hover::after,
+  .main-nav a:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  :where(.feature-card, .model-card, .pricing-card, .faq-item, .contact-card, .app-preview) {
+    will-change: transform;
+  }
+
+  :where(.feature-card, .model-card, .pricing-card, .faq-item, .contact-card, .app-preview):hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, .38);
+  }
+
+  .hero-copy > *,
+  .hero-visual > *,
+  .section-heading > * {
+    animation: professional-reveal 700ms cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .hero-copy > :nth-child(2) { animation-delay: 80ms; }
+  .hero-copy > :nth-child(3) { animation-delay: 160ms; }
+  .hero-copy > :nth-child(4) { animation-delay: 240ms; }
+  .hero-visual > :nth-child(2) { animation-delay: 140ms; }
+
+  @keyframes professional-reveal {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: .01ms !important;
+    }
+  }
+
   .brand {
     width: auto;
     justify-content: center;
@@ -777,7 +967,7 @@ button {
     width: 100%;
     order: 3;
     gap: 10px 16px;
-    background: rgba(17, 24, 39, 0.95);
+    background: #101010;
     border: 1px solid var(--line);
     border-radius: 16px;
     padding: 14px 16px;
@@ -832,4 +1022,18 @@ button {
     flex-direction: column;
     text-align: center;
   }
+}
+
+.header-signin-button,
+.header-getstarted-button {
+  border-color: #fff;
+  background: #000;
+  color: #fff;
+}
+
+.header-getstarted-button:hover,
+.header-signin-button:hover {
+  border-color: #fff;
+  background: #fff;
+  color: #000;
 }
