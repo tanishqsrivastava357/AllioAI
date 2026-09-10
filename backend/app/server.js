@@ -16,6 +16,8 @@ const port = Number(process.env.PORT || 3000);
 const isProduction = process.env.NODE_ENV === "production";
 const siteUrl = process.env.SITE_URL || `http://localhost:${process.env.PORT || 3000}`;
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const githubClientId = process.env.GITHUB_CLIENT_ID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
 const geminiApiKey = process.env.GEMINI_API_KEY;
@@ -103,6 +105,20 @@ function randomToken() {
 
 function hashToken(token) {
   return crypto.createHash("sha256").update(`${token}.${sessionSecret}`).digest("hex");
+}
+
+function githubStateCookieOptions() {
+  return { ...cookieOptions(), maxAge: 10 * 60 * 1000 };
+}
+
+async function createSession(userId, res) {
+  const sessionToken = randomToken();
+  await pool.query(
+    `INSERT INTO sessions (token_hash, user_id, expires_at)
+     VALUES ($1, $2, NOW() + INTERVAL '30 days')`,
+    [hashToken(sessionToken), userId]
+  );
+  res.cookie("allioai_session", sessionToken, cookieOptions());
 }
 
 function cookieOptions() {
@@ -448,6 +464,7 @@ app.post("/api/auth/google/access-token", async (req, res, next) => {
     const profileResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
+
     const profile = await profileResponse.json();
     if (!profileResponse.ok || !profile.sub || !profile.email || profile.email_verified !== true) {
       return res.status(401).json({ error: "Google account information is not verified." });
@@ -468,6 +485,71 @@ app.post("/api/auth/google/access-token", async (req, res, next) => {
     );
     res.cookie("allioai_session", sessionToken, cookieOptions());
     return res.json({ authenticated: true, user: userResult.rows[0] });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.get("/api/auth/github", (req, res) => {
+  if (!githubClientId || !githubClientSecret) {
+    return res.status(503).send("GitHub sign-in is not configured.");
+  }
+  const state = randomToken();
+  res.cookie("allioai_github_state", state, githubStateCookieOptions());
+  const params = new URLSearchParams({
+    client_id: githubClientId,
+    redirect_uri: `${siteUrl}/api/auth/github/callback`,
+    scope: "read:user user:email",
+    state
+  });
+  return res.redirect(`https://github.com/login/oauth/authorize?${params}`);
+});
+
+app.get("/api/auth/github/callback", async (req, res, next) => {
+  try {
+    const { code, state } = req.query;
+    const savedState = req.cookies.allioai_github_state;
+    res.clearCookie("allioai_github_state", githubStateCookieOptions());
+    const stateMatches = typeof state === "string" && typeof savedState === "string" &&
+      Buffer.byteLength(state) === Buffer.byteLength(savedState) &&
+      crypto.timingSafeEqual(Buffer.from(state), Buffer.from(savedState));
+    if (!githubClientId || !githubClientSecret || typeof code !== "string" || !stateMatches) {
+      return res.status(401).send("GitHub sign-in could not be verified.");
+    }
+
+    const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: { Accept: "application/json", "Content-Type": "application/json" },
+      body: JSON.stringify({ client_id: githubClientId, client_secret: githubClientSecret, code, redirect_uri: `${siteUrl}/api/auth/github/callback` })
+    });
+    const token = await tokenResponse.json();
+    if (!tokenResponse.ok || !token.access_token) return res.status(401).send("GitHub sign-in could not be completed.");
+
+    const githubHeaders = {
+      Accept: "application/vnd.github+json",
+      Authorization: `Bearer ${token.access_token}`,
+      "User-Agent": "AllioAI"
+    };
+    const [profileResponse, emailsResponse] = await Promise.all([
+      fetch("https://api.github.com/user", { headers: githubHeaders }),
+      fetch("https://api.github.com/user/emails", { headers: githubHeaders })
+    ]);
+    const [profile, emails] = await Promise.all([profileResponse.json(), emailsResponse.json()]);
+    const email = Array.isArray(emails)
+      ? emails.find((item) => item.primary && item.verified)?.email || emails.find((item) => item.verified)?.email
+      : null;
+    if (!profileResponse.ok || !profile.id || !email) return res.status(401).send("A verified GitHub email is required.");
+
+    const userResult = await pool.query(
+      `INSERT INTO users (github_id, email, name, avatar_url)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (github_id) DO UPDATE SET email = EXCLUDED.email,
+         name = EXCLUDED.name, avatar_url = EXCLUDED.avatar_url, updated_at = NOW()
+       RETURNING id`,
+      [String(profile.id), email, profile.name || profile.login || email, profile.avatar_url || ""]
+    );
+    await createSession(userResult.rows[0].id, res);
+    return res.redirect("/app.html");
   } catch (error) {
     return next(error);
   }
