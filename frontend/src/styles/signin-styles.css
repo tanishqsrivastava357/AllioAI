@@ -32,8 +32,9 @@ html, body {
 
 body {
   min-height: 100vh;
-  display: block;
-  padding: 24px 0 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
 
 button, input {
@@ -47,7 +48,6 @@ a {
 
 .page-shell {
   width: min(1100px, 100%);
-  margin: 0 auto;
   background: rgba(12, 17, 28, 0.84);
   border: 1px solid var(--line);
   border-radius: 28px;
@@ -542,4 +542,59 @@ html,body{background:
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
+}
+
+.auth-footer {
+  width: 100vw;
+  min-height: 325px;
+  margin: 24px 0 0;
+  padding: 42px 0 24px;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, #090b12 0%, #040507 100%);
+  color: #fff;
+}
+
+.auth-footer .end-inner {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.auth-footer .end-logo { width: 40px; height: 40px; margin: 0 0 12px; display: block; }
+.auth-footer .end-logo-tagline,
+.auth-footer .end-bottom { color: #9aa4b2; }
+.auth-footer .end-logo-tagline,
+.auth-footer .end-logo-name,
+.auth-footer .end-product-heading,
+.auth-footer .end-company-heading,
+.auth-footer .end-legal-heading,
+.auth-footer .end-logo-links-1,
+.auth-footer .end-logo-links-2,
+.auth-footer .end-logo-links-3,
+.auth-footer .end-copyright,
+.auth-footer .end-inspiration { margin-top: 0; }
+.auth-footer .end-logo-name { margin-bottom: 0; }
+.auth-footer .end-product-heading,
+.auth-footer .end-company-heading,
+.auth-footer .end-legal-heading { margin-bottom: 16px; color: #9aa4b2; font-size: 15px; letter-spacing: .08em; }
+.auth-footer .end-logo-links-1,
+.auth-footer .end-logo-links-2,
+.auth-footer .end-logo-links-3 { margin-bottom: 10px; color: #f5f7ff; transition: color .2s ease; }
+.auth-footer a:hover .end-logo-links-1,
+.auth-footer a:hover .end-logo-links-2,
+.auth-footer a:hover .end-logo-links-3 { color: #a855f7; }
+.auth-footer .end-divider { border: 0; border-top: 1px solid rgba(255,255,255,.08); margin: 28px auto 0; }
+.auth-footer .end-bottom { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-top: 16px; font-size: 15px; }
+
+@media (max-width: 960px) {
+  .auth-footer .end-inner { grid-template-columns: 1fr 1fr; }
+  .auth-footer .end-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 640px) {
+  .auth-footer { padding: 32px 20px 24px; }
+  .auth-footer .end-inner { grid-template-columns: 1fr; gap: 18px; }
+  .auth-footer .end-bottom { font-size: 13px; }
 }
