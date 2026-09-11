@@ -5,6 +5,7 @@ const APP_SHELL = [
   "../styles/stylesforallioai.css",
   "../scripts/home.js?v=20260911-install-aware",
   "../scripts/nav.js?v=20260911-header-fixed",
+  "../assets/logo.webp",
   "../assets/logo.png"
 ];
 

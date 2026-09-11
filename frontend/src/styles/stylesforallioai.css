@@ -83,6 +83,10 @@ img {
   display: block;
 }
 
+picture {
+  display: contents;
+}
+
 button {
   font: inherit;
 }
