@@ -27,6 +27,57 @@ if (previewPrompt) {
 
 
 (() => {
+        let installPromptEvent;
+        const installButton = document.querySelector("[data-install-app]");
+        const isStandalone = () => window.matchMedia("(display-mode: standalone)").matches ||
+          window.navigator.standalone === true;
+        const markInstalled = () => {
+          if (!installButton) return;
+          installButton.textContent = "App installed";
+          installButton.disabled = true;
+          installButton.setAttribute("aria-label", "AllioAI app is already installed");
+        };
+
+        window.addEventListener("beforeinstallprompt", (event) => {
+          event.preventDefault();
+          installPromptEvent = event;
+          if (installButton) installButton.hidden = false;
+        });
+
+        window.addEventListener("appinstalled", () => {
+          installPromptEvent = null;
+          markInstalled();
+        });
+
+        if (installButton) {
+          installButton.hidden = false;
+          if (isStandalone()) {
+            markInstalled();
+          }
+          installButton.addEventListener("click", async () => {
+            if (isStandalone()) {
+              markInstalled();
+              return;
+            }
+
+            if (installPromptEvent) {
+              installPromptEvent.prompt();
+              const { outcome } = await installPromptEvent.userChoice;
+              installPromptEvent = null;
+              if (outcome === "accepted") markInstalled();
+              return;
+            }
+
+            installButton.textContent = "Use your browser menu to install";
+          });
+        }
+
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("sw.js").catch((error) => {
+            console.error("AllioAI PWA registration failed.", error);
+          });
+        }
+
         const demoData = {
           chat: { question: "How can I make my next product launch unforgettable?", answer: 'Start with a clear point of view. <strong>AllioAI can turn your rough idea into a launch plan</strong>, campaign copy, and a focused checklist in minutes.', citations: ["Launch brief", "Audience notes", "3 sources"] },
           research: { question: "What are the strongest signals in this market?", answer: 'I found three themes across the latest sources. <strong>Demand is moving toward simpler, faster workflows</strong>, with trust and transparency driving adoption.', citations: ["12 sources", "Market scan", "Cited answer"] },
