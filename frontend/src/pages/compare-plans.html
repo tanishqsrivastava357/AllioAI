@@ -6,10 +6,10 @@
     <meta name="description" content="Compare AllioAI plans and choose the right workspace for you.">
     <title>Compare Plans | AllioAI</title>
     <link rel="icon" href="../assets/logo.png" type="image/png">
-    <link rel="stylesheet" href="../styles/stylesforallioai.css">
-    <link rel="stylesheet" href="../styles/compare-plans-styles.css">
+    <link rel="stylesheet" href="../styles/stylesforallioai.css?v=20260911-compare">
+    <link rel="stylesheet" href="../styles/compare-plans-styles.css?v=20260911-compare">
   </head>
-  <body>
+  <body class="compare-document">
     <header class="header">
       <div class="container header-inner">
         <a href="/" class="brand" aria-label="AllioAI home">
@@ -36,27 +36,40 @@
       <section class="compare-hero">
         <div class="container">
           <p class="section-kicker">Plans and features</p>
-          <h1>Choose the right plan for your work.</h1>
-          <p>Compare access, limits, and support before you get started with AllioAI.</p>
+          <h1>Compare <span class="gradient-text">plans.</span></h1>
+          <p>See exactly what is included in each AllioAI workspace before you get started.</p>
+          <div class="compare-trust" aria-label="Plan benefits"><span>No credit card required for Free</span><span>Cancel anytime</span><span>Secure checkout</span></div>
         </div>
       </section>
 
       <section class="container compare-table-section" aria-labelledby="comparison-title">
         <h2 id="comparison-title" class="sr-only">Plan comparison</h2>
+        <div class="compare-controls">
+          <div>
+            <p class="compare-kicker">Choose your billing cycle</p>
+            <p class="compare-note">Annual Pro pricing saves 20%.</p>
+          </div>
+          <div class="billing-toggle" role="group" aria-label="Billing cycle">
+            <button type="button" class="active" data-compare-billing="monthly" aria-pressed="true">Monthly</button>
+            <button type="button" data-compare-billing="annual" aria-pressed="false">Annual <span>Save 20%</span></button>
+          </div>
+        </div>
         <div class="compare-table-wrap">
           <table class="compare-table">
             <thead>
               <tr>
                 <th scope="col">Features</th>
-                <th scope="col">Free<span>$0</span></th>
-                <th scope="col">Pro<span>$19/mo</span></th>
-                <th scope="col">Business<span>Custom</span></th>
+                <th scope="col"><strong>Free</strong><span class="plan-price">$0</span><a href="/app" class="plan-cta">Get started</a><small>Start with the essentials.</small></th>
+                <th scope="col" class="recommended"><b class="popular-tag">Most popular</b><strong>Pro</strong><span class="plan-price" data-monthly="$19" data-annual="$179">$19</span><span class="plan-period">/mo</span><a href="/app" class="plan-cta primary">Upgrade</a><small>Everything in Free, plus:</small></th>
+                <th scope="col"><strong>Business</strong><span class="plan-price">Custom</span><a href="/contact" class="plan-cta">Contact Sales</a><small>Everything in Pro, plus:</small></th>
               </tr>
             </thead>
             <tbody>
+              <tr class="group-row"><th colspan="4">Core features</th></tr>
               <tr><th scope="row">Everyday text chats</th><td>10 Messages</td><td>30 Messages</td><td>30 Messages</td></tr>
               <tr><th scope="row">Chat history</th><td>Included</td><td>Included</td><td>Included</td></tr>
               <tr><th scope="row">Access on web, iOS, Android</th><td>Included</td><td>Included</td><td>Included</td></tr>
+              <tr class="group-row"><th colspan="4">AI models and limits</th></tr>
               <tr><th scope="row">AllioGPT</th><td>Included</td><td>Included</td><td>Included</td></tr>
               <tr><th scope="row">AllioGPT Fast</th><td>Included</td><td>Included</td><td>Included</td></tr>
               <tr><th scope="row">AllioGPT Reasoning</th><td>—</td><td>Included</td><td>Included</td></tr>
@@ -85,12 +98,27 @@
               <tr><th scope="row">Image Generation</th><td>2 Images/day</td><td>6 Images/day</td><td>Custom</td></tr>
               <tr><th scope="row">Interactive tables and charts</th><td>Included</td><td>Included</td><td>Included</td></tr>
               <tr><th scope="row">Deep research</th><td>—</td><td>Included</td><td>Included</td></tr>
+              <tr class="group-row"><th colspan="4">Support and business</th></tr>
               <tr><th scope="row">Enhanced Support</th><td>Basic</td><td>Priority</td><td>Top Priority</td></tr>
               <tr><th scope="row">Dedicated onboarding</th><td>—</td><td>—</td><td>Included</td></tr>
               <tr><th scope="row">Ongoing account management</th><td>—</td><td>—</td><td>Included</td></tr>
               <tr><th scope="row">Custom security review</th><td>—</td><td>—</td><td>Included</td></tr>
             </tbody>
+            <tfoot>
+              <tr><th scope="row">Ready to get started?</th><td><a href="/app" class="plan-cta">Get started</a></td><td><a href="/app" class="plan-cta primary">Start Pro</a></td><td><a href="/contact" class="plan-cta">Contact Sales</a></td></tr>
+            </tfoot>
           </table>
+        </div>
+        <p class="table-mobile-note">Swipe across the comparison table. The feature name stays visible while you compare plans.</p>
+      </section>
+
+      <section class="container compare-faq" aria-labelledby="compare-faq-title">
+        <div class="section-heading"><p class="section-kicker">Plan questions</p><h2 id="compare-faq-title">Still deciding?</h2></div>
+        <div class="faq-list">
+          <details class="faq-item"><summary>Can I switch plans anytime?</summary><p>Yes. You can move between available plans from your account, and your access updates according to the plan you choose.</p></details>
+          <details class="faq-item"><summary>What happens if I downgrade?</summary><p>Your account keeps its data and conversations. Paid-only limits and features change when the new plan takes effect.</p></details>
+          <details class="faq-item"><summary>Do you offer refunds?</summary><p>Refund eligibility depends on the purchase terms shown at checkout. Contact us if you need help with a billing question.</p></details>
+          <details class="faq-item"><summary>Which plan is right for a team?</summary><p>Business is designed for shared workspaces, admin controls, and dedicated support. <a href="/contact">Talk to Sales</a> if you need guidance.</p></details>
         </div>
       </section>
     </main>
@@ -104,6 +132,7 @@
       </div>
       <hr class="end-divider" /><div class="end-bottom"><p class="end-copyright">© 2026 AllioAI. All rights reserved.</p><p class="end-inspiration">Made with care for thinkers, makers, and builders.</p></div>
     </div>
-    <script src="../scripts/nav.js" defer></script>
+    <script src="../scripts/nav.js?v=20260911-compare" defer></script>
+    <script src="../scripts/compare-plans.js?v=20260911-compare" defer></script>
   </body>
 </html>
