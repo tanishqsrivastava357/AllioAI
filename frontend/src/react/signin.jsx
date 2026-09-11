@@ -64,9 +64,8 @@ function SignInButton() {
     }
   };
   const redirectAfterSignIn = () => {
-    const destination = window.localStorage.getItem("redirectAfterLogin");
     window.localStorage.removeItem("redirectAfterLogin");
-    window.location.href = destination === "app.html" ? "/app" : (destination || "/app");
+    window.location.href = "/app";
   };
 
   if (!clientId || clientId.startsWith("REPLACE_")) {
