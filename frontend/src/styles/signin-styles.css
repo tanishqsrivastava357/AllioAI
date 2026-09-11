@@ -48,6 +48,7 @@ a {
 .page-shell {
   width: min(1100px, 100%);
   margin: 0 auto;
+  min-height: min(760px, calc(100dvh - 48px));
   background: rgba(12, 17, 28, 0.84);
   border: 1px solid var(--line);
   border-radius: 28px;
@@ -188,7 +189,7 @@ a {
 
 .form-panel {
   background: rgba(255,255,255,0.01);
-  padding: 42px 34px;
+  padding: 56px 42px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,6 +197,13 @@ a {
 
 .auth-card {
   width: min(100%, 430px);
+  padding: 34px;
+  border: 1px solid rgba(196,181,253,.28);
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(14,14,14,.98), rgba(14,14,14,.98)) padding-box,
+    linear-gradient(145deg, rgba(192,132,252,.8), rgba(124,58,237,.18) 46%, rgba(34,211,238,.35)) border-box;
+  box-shadow: 0 28px 70px rgba(0,0,0,.55), 0 0 38px rgba(124,58,237,.12);
 }
 
 .auth-header {
@@ -241,19 +249,20 @@ a {
   min-height: 52px;
   padding: 0 16px;
   border: 1px solid #dadce0;
-  border-radius: 4px;
+  border-radius: 12px;
   background: #fff;
   color: #3c4043;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 240ms cubic-bezier(.22, 1, .36, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .google-fallback-button:hover {
   background: #f8faff;
   box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3);
+  transform: translateY(-2px);
 }
 
 .github-signin-button {
@@ -276,6 +285,12 @@ a {
   background: #222;
   border-color: rgba(196,181,253,.45);
   transform: translateY(-2px);
+}
+
+.google-fallback-button:focus-visible,
+.github-signin-button:focus-visible {
+  outline: 3px solid rgba(192,132,252,.75);
+  outline-offset: 3px;
 }
 
 .github-mark {
@@ -419,6 +434,19 @@ a {
   font-size: 0.93rem;
 }
 
+.legal-copy {
+  margin: 0;
+  color: #858585;
+  font-size: .78rem;
+  line-height: 1.6;
+}
+
+.legal-copy a {
+  color: #d8b4fe;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .form-group {
   margin-bottom: 16px;
 }
@@ -505,10 +533,16 @@ a {
 @media (max-width: 900px) {
   .page-shell {
     grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .brand-panel {
     min-height: 320px;
+    order: 2;
+  }
+
+  .form-panel {
+    order: 1;
   }
 }
 
@@ -520,6 +554,23 @@ a {
   .brand-panel,
   .form-panel {
     padding: 24px 18px;
+  }
+
+  .auth-card {
+    padding: 26px 20px;
+    border-radius: 20px;
+  }
+
+  .brand-panel {
+    min-height: 280px;
+  }
+
+  .hero-copy {
+    margin-top: 34px;
+  }
+
+  .preview-card {
+    margin-top: 28px;
   }
 
   .social-row {
@@ -587,4 +638,29 @@ html,body{background:
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
   }
+}
+
+/* Keep both provider choices equally prominent in the monochrome theme. */
+.google-fallback-button,
+.github-signin-button {
+  min-height: 52px;
+  border-radius: 12px;
+}
+
+.github-signin-button {
+  border-color: #5a5a63;
+  background: #1b1b21;
+  color: #fff;
+}
+
+.github-signin-button:hover {
+  background: #2a2633;
+  color: #fff;
+  border-color: #c084fc;
+}
+
+.google-fallback-button:focus-visible,
+.github-signin-button:focus-visible {
+  outline: 3px solid rgba(192,132,252,.75);
+  outline-offset: 3px;
 }
