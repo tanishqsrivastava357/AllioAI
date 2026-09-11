@@ -546,6 +546,18 @@ a {
   }
 }
 
+@media (min-width: 521px) and (max-width: 900px) {
+  .brand-top {
+    justify-content: center;
+  }
+
+  .hero-copy {
+    width: min(100%, 500px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 @media (max-width: 520px) {
   body {
     padding: 16px;
