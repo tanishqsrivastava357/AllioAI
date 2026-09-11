@@ -36,11 +36,14 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 90px;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  max-width: 100%;
   font-family: Arial, sans-serif;
   background: #000;
   color: var(--text);

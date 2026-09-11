@@ -1,5 +1,5 @@
 :root{--compare-purple:#a855f7;--compare-line:rgba(255,255,255,.1);--compare-muted:#a3a3a3}
-.compare-document{max-width:100%;overflow-x:clip}
+.compare-document{width:100%;max-width:100%;overflow-x:clip}
 .compare-page{max-width:100%;min-width:0;padding:78px 0 100px;background:#000;color:#fff;overflow-x:clip}
 .compare-hero{padding:clamp(58px,8vw,104px) 0 48px;text-align:center}
 .compare-hero h1{max-width:720px;margin:0 auto;font-size:clamp(2.8rem,6vw,4.8rem);letter-spacing:-.065em;line-height:1.05}
@@ -16,7 +16,7 @@
 .billing-toggle button.active{background:#f5f5f7;color:#09090b}
 .billing-toggle button span{color:#c084fc;font-size:.72rem}
 .billing-toggle button.active span{color:#6d28d9}
-.compare-table-wrap{max-height:72vh;overflow:auto;border:1px solid #333;border-radius:20px;background:#101010;box-shadow:0 24px 60px rgba(0,0,0,.45);scrollbar-color:#4a4a4a #101010;scrollbar-width:thin}
+.compare-table-wrap{width:100%;max-width:100%;min-width:0;max-height:72vh;overflow:auto;border:1px solid #333;border-radius:20px;background:#101010;box-shadow:0 24px 60px rgba(0,0,0,.45);scrollbar-color:#4a4a4a #101010;scrollbar-width:thin;contain:layout paint}
 .compare-table-wrap::-webkit-scrollbar{width:10px;height:10px}
 .compare-table-wrap::-webkit-scrollbar-track{background:#101010}
 .compare-table-wrap::-webkit-scrollbar-thumb{border:2px solid #101010;border-radius:99px;background:#4a4a4a}
