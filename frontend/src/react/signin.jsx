@@ -66,7 +66,7 @@ function SignInButton() {
   const redirectAfterSignIn = () => {
     const destination = window.localStorage.getItem("redirectAfterLogin");
     window.localStorage.removeItem("redirectAfterLogin");
-    window.location.href = destination || "app.html";
+    window.location.href = destination || "/app";
   };
 
   if (!clientId || clientId.startsWith("REPLACE_")) {

@@ -19,7 +19,7 @@ async function handleGoogleSignIn(response) {
     if (!result.ok) throw new Error(data.error || "Google sign-in failed.");
     const destination = window.localStorage.getItem("redirectAfterLogin");
     window.localStorage.removeItem("redirectAfterLogin");
-    window.location.href = destination || "app.html";
+    window.location.href = destination || "/app";
   } catch (error) {
     console.error(error);
     showAuthStatus(error.message, true);

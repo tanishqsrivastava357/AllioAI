@@ -548,7 +548,7 @@ app.get("/api/auth/github/callback", async (req, res, next) => {
       [String(profile.id), email, profile.name || profile.login || email, profile.avatar_url || ""]
     );
     await createSession(userResult.rows[0].id, res);
-    return res.redirect("/app.html");
+    return res.redirect("/app");
   } catch (error) {
     return next(error);
   }
@@ -738,7 +738,7 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
 }));
 
 app.use((req, res, next) => {
-  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|release|privacy-policy|tnc)\.html$/);
+  const match = req.path.match(/^\/(index|app|signin|aboutus|contact|release|privacy-policy|tnc|compare-plans)\.html$/);
   if (!match) return next();
   return res.redirect(308, `/${match[1]}${req.url.slice(req.path.length)}`);
 });

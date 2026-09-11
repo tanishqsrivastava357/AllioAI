@@ -27,10 +27,10 @@ if (signinButton) {
 
         if (isLoggedIn === "true") {
             // User is already signed in
-            window.location.href = "C:/AllioAI/frontend/src/pages/app.html";
+            window.location.href = "/app";
         } else {
             // User is not signed in
-            window.location.href = "C:/AllioAI/frontend/src/pages/signin.html";
+            window.location.href = "/signin";
         }
 
     });
@@ -52,15 +52,15 @@ function handleUpgrade(plan) {
     if (isLoggedIn === "true") {
 
         // Already logged in → Billing page
-        window.location.href = "billing.html";
+        window.location.href = "/billing";
 
     } else {
 
         // Not logged in → Remember destination
-        localStorage.setItem("redirectAfterLogin", "billing.html");
+        localStorage.setItem("redirectAfterLogin", "/billing");
 
         // Go to Sign In
-        window.location.href = "signin.html";
+        window.location.href = "/signin";
     }
 }
 

@@ -1,7 +1,7 @@
 const CACHE_NAME = "allioai-pwa-v2";
 const APP_SHELL = [
-  "./index.html",
-  "./app.html",
+  "./",
+  "./app",
   "../styles/stylesforallioai.css",
   "../scripts/home.js?v=20260911-install-aware",
   "../scripts/nav.js?v=20260911-header-fixed",

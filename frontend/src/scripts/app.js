@@ -539,7 +539,7 @@
       console.error(error);
     }
     window.localStorage.setItem("redirectAfterLogin", "billing.html");
-    window.location.href = "signin.html";
+    window.location.href = "/signin";
   });
 
   const loadConversations = async () => {
@@ -566,7 +566,7 @@
   const loadAccount = async () => {
     const response = await fetch("/api/auth/status", { credentials: "include" });
     if (!response.ok) {
-      window.location.href = "signin.html";
+      window.location.href = "/signin";
       return;
     }
     const data = await response.json();
@@ -589,6 +589,6 @@
 
   loadAccount().catch((error) => {
     console.error(error);
-    window.location.href = "signin.html";
+    window.location.href = "/signin";
   });
 })();
