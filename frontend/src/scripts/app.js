@@ -532,13 +532,13 @@
       if (!response.ok && response.status !== 401) throw new Error("Unable to verify sign-in status.");
       const data = await response.json();
       if (data.authenticated) {
-        window.location.href = "billing.html";
+        window.location.href = "/app";
         return;
       }
     } catch (error) {
       console.error(error);
     }
-    window.localStorage.setItem("redirectAfterLogin", "billing.html");
+    window.localStorage.setItem("redirectAfterLogin", "/app");
     window.location.href = "/signin";
   });
 

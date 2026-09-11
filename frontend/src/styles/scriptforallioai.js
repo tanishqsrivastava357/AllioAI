@@ -52,12 +52,12 @@ function handleUpgrade(plan) {
     if (isLoggedIn === "true") {
 
         // Already logged in → Billing page
-        window.location.href = "/billing";
+        window.location.href = "/app";
 
     } else {
 
         // Not logged in → Remember destination
-        localStorage.setItem("redirectAfterLogin", "/billing");
+        localStorage.setItem("redirectAfterLogin", "/app");
 
         // Go to Sign In
         window.location.href = "/signin";
