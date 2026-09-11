@@ -67,4 +67,6 @@ if (previewPrompt) {
           button.setAttribute("aria-pressed", "true");
           updatePrice(button.dataset.billing);
         }));
+
+        updatePrice("monthly");
       })();
