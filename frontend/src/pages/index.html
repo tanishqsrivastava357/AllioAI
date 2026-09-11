@@ -122,7 +122,9 @@
       .pricing-compare tbody tr:last-child th, .pricing-compare tbody tr:last-child td { border-bottom: 0; }
       .compare-plans-link { display: inline-flex; margin-top: 18px; }
       .mobile-section { background: radial-gradient(circle at 80% 50%, rgba(83,74,210,.13), transparent 35%); }
-      .mobile-panel { display: flex; align-items: center; gap: 35px; }
+      .mobile-panel { display: flex; align-items: center; gap: 35px; min-width: 0; }
+      .mobile-panel > div:last-child { min-width: 0; }
+      .mobile-panel:last-child { flex-direction: column; align-items: flex-start; }
       .phone { flex: 0 0 145px; height: 265px; padding: 8px; border: 1px solid rgba(255,255,255,.22); border-radius: 24px; background: #07070a; box-shadow: 0 20px 45px rgba(0,0,0,.5); }
       .phone-screen { height: 100%; padding: 14px 10px; border-radius: 17px; background: linear-gradient(155deg,#21164a,#101d2e 70%); }
       .phone-top { display: flex; justify-content: space-between; color: #d5d5df; font-size: .56rem; } .phone-logo { margin: 25px 0 11px; color: #fff; font-size: .78rem; font-weight: 700; } .phone-message { padding: 10px; border: 1px solid rgba(255,255,255,.15); border-radius: 9px; color: #c7c8d3; font-size: .59rem; line-height: 1.5; }
@@ -142,7 +144,7 @@
     <header class="header">
       <div class="container header-inner">
         <a href="index.html" class="brand" aria-label="AllioAI home"><img src="../assets/logo.png" alt="AllioAI logo" class="header-logo" width="34" height="34" /><span class="brand-name">AllioAI</span></a>
-        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <button type="button" class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
         <nav class="main-nav" aria-label="Main navigation"><a href="#Features">Features</a><a href="#Models">Models</a><a href="#Pricing">Pricing</a><a href="#FAQ">FAQ</a></nav>
         <div class="header-actions"><a href="signin.html" class="header-signin-button">Sign in</a><a href="app.html" class="header-getstarted-button">Get started</a></div>
       </div>
@@ -162,7 +164,7 @@
           <div class="demo-shell" id="Demo">
             <div class="demo-window">
               <div class="demo-bar"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span><span>allio.ai / workspace</span></div>
-              <div class="demo-tabs" role="tablist" aria-label="AllioAI capabilities"><button class="demo-tab active" data-demo="chat" role="tab" aria-selected="true">Chat</button><button class="demo-tab" data-demo="research" role="tab" aria-selected="false">Deep research</button><button class="demo-tab" data-demo="images" role="tab" aria-selected="false">Images</button></div>
+              <div class="demo-tabs" role="tablist" aria-label="AllioAI capabilities"><button type="button" class="demo-tab active" data-demo="chat" role="tab" aria-selected="true">Chat</button><button type="button" class="demo-tab" data-demo="research" role="tab" aria-selected="false">Deep research</button><button type="button" class="demo-tab" data-demo="images" role="tab" aria-selected="false">Images</button></div>
               <div class="demo-content"><p class="demo-kicker">Ask AllioAI</p><h2 class="demo-question" id="demoQuestion">How can I make my next product launch unforgettable?</h2><div class="demo-answer"><span class="ai-mark">AI</span><div><p id="demoAnswer">Start with a clear point of view. <strong>AllioAI can turn your rough idea into a launch plan</strong>, campaign copy, and a focused checklist in minutes.</p><div class="citations" id="citations"><span class="citation">Launch brief</span><span class="citation">Audience notes</span><span class="citation">3 sources</span></div></div></div><div class="demo-input"><span>Ask a follow-up...</span><span class="send-icon">↑</span></div></div>
             </div>
           </div>
