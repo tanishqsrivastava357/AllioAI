@@ -69,4 +69,26 @@ if (previewPrompt) {
         }));
 
         updatePrice("monthly");
+        const codePreview = document.querySelector("#codePreview");
+        if (codePreview) {
+          let codeStep = 0;
+          const codeLines = [
+            '<div><span class="purple">const</span> launch = <span class="cyan">await</span> allio.<span class="green">plan</span>({</div>',
+            '<div>&nbsp;&nbsp;goal: <span class="green">"ship with confidence"</span>,</div>',
+            '<div>&nbsp;&nbsp;context: project.files</div>',
+            '<div>});</div>'
+          ];
+          codePreview.innerHTML = "";
+          const typeCode = () => {
+            if (codeStep >= codeLines.length) return;
+            codePreview.insertAdjacentHTML("beforeend", codeLines[codeStep]);
+            codeStep += 1;
+            window.setTimeout(typeCode, 260);
+          };
+          window.setTimeout(typeCode, 260);
+          document.querySelectorAll("[data-code-action]").forEach((button) => button.addEventListener("click", () => {
+            document.querySelectorAll("[data-code-action]").forEach((item) => item.classList.remove("active"));
+            button.classList.add("active");
+          }));
+        }
       })();
