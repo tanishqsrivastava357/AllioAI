@@ -541,6 +541,11 @@ a {
     order: 2;
   }
 
+  .brand-top {
+    width: fit-content;
+    margin-inline: auto;
+  }
+
   .form-panel {
     order: 1;
   }
