@@ -95,6 +95,11 @@ button {
   background: #000;
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+  transition: transform 220ms ease;
+}
+
+.header.header-hidden {
+  transform: translateY(-105%);
 }
 
 .header-inner {
