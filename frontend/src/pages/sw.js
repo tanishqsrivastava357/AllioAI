@@ -1,4 +1,4 @@
-const CACHE_NAME = "allioai-pwa-v3";
+const CACHE_NAME = "allioai-pwa-v4";
 const APP_SHELL = [
   "./",
   "./app",
