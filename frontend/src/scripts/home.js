@@ -1,4 +1,48 @@
 const previewPrompt = document.querySelector("#previewPrompt");
+const demoLabel = document.querySelector("#demoLabel");
+const demoResponse = document.querySelector("#demoResponse");
+const demoCitations = document.querySelector("#demoCitations");
+const demoTabs = document.querySelectorAll(".demo-tab");
+const demoContent = {
+  chat: {
+    prompt: "Explain stock market",
+    label: "What can I help you with?",
+    response: "Clear answers, useful context, and a next step.",
+    chips: ["Context-aware", "Fast response"]
+  },
+  research: {
+    prompt: "Compare renewable energy trends",
+    label: "Research with sources",
+    response: "A concise synthesis with the evidence behind it.",
+    chips: ["Citations", "Multi-source"]
+  },
+  images: {
+    prompt: "Create a midnight city concept",
+    label: "Turn ideas into visuals",
+    response: "Explore a visual direction, then refine it in seconds.",
+    chips: ["Creative", "Iterate"]
+  }
+};
+
+const setDemo = (name) => {
+  const content = demoContent[name];
+  if (!content) return;
+  previewPrompt.textContent = content.prompt;
+  demoLabel.textContent = content.label;
+  demoResponse.textContent = content.response;
+  demoCitations.replaceChildren(...content.chips.map((chip) => {
+    const element = document.createElement("span");
+    element.textContent = chip;
+    return element;
+  }));
+  demoTabs.forEach((tab) => {
+    const selected = tab.dataset.demo === name;
+    tab.classList.toggle("is-active", selected);
+    tab.setAttribute("aria-selected", String(selected));
+  });
+};
+
+demoTabs.forEach((tab) => tab.addEventListener("click", () => setDemo(tab.dataset.demo)));
 const previewPrompts = [
   "Explain stock market",
   "What is BODMAS?",
