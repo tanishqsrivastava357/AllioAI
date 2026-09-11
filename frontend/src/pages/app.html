@@ -70,8 +70,16 @@
             <h1>What can I help you <span>with?</span></h1>
             <form class="composer" id="homeComposer">
               <label class="sr-only" for="homePrompt">Ask AllioAI anything</label>
-              <button class="composer-tool" id="attachmentButton" type="button" aria-label="Add attachment">＋</button>
-              <input class="sr-only" id="attachmentInput" type="file" accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.txt,.csv,.md,.markdown,.json,.js,.mjs,.cjs,.css,.html,.htm,.xml,.sql,.py,.c,.h,.cpp,.hpp">
+              <button class="composer-tool" id="attachmentButton" type="button" aria-label="Open attachment options" aria-expanded="false" aria-controls="attachmentMenu"><span aria-hidden="true">＋</span></button>
+              <input class="sr-only" id="attachmentInput" type="file" accept="image/*,application/pdf,text/plain,text/csv,text/markdown,application/json,text/javascript,text/css,text/html,application/xml,.sql,.py,.c,.h,.cpp,.hpp">
+              <div class="attachment-menu" id="attachmentMenu" role="menu" hidden>
+                <button type="button" role="menuitem" data-attachment-action="upload"><span aria-hidden="true">▣</span>Upload files</button>
+                <button type="button" role="menuitem" data-attachment-action="image"><span aria-hidden="true">▧</span>Create image</button>
+                <button type="button" role="menuitem" data-attachment-action="music"><span aria-hidden="true">♫</span>Create music</button>
+                <button type="button" role="menuitem" data-attachment-action="canvas"><span aria-hidden="true">▤</span>Canvas</button>
+                <button type="button" role="menuitem" data-attachment-action="learning"><span aria-hidden="true">✧</span>Guided Learning</button>
+                <button type="button" role="menuitem" data-attachment-action="tools"><span aria-hidden="true">•••</span>More tools <span aria-hidden="true" class="attachment-menu-arrow">›</span></button>
+              </div>
               <span class="attachment-chip" id="attachmentChip" hidden>
                 <span class="attachment-name" id="attachmentName"></span>
                 <button id="removeAttachment" type="button" aria-label="Remove attachment">×</button>

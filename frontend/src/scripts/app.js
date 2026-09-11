@@ -30,6 +30,7 @@
   const speechStatus = document.querySelector("#speechStatus");
   const attachmentButton = document.querySelector("#attachmentButton");
   const attachmentInput = document.querySelector("#attachmentInput");
+  const attachmentMenu = document.querySelector("#attachmentMenu");
   const attachmentChip = document.querySelector("#attachmentChip");
   const attachmentName = document.querySelector("#attachmentName");
   const removeAttachment = document.querySelector("#removeAttachment");
@@ -210,20 +211,48 @@
       homePrompt.value = button.dataset.prompt;
       homePrompt.focus();
     });
+  });
 
-    attachmentButton.addEventListener("click", () => attachmentInput.click());
-    attachmentInput.addEventListener("change", () => {
-      selectedFile = attachmentInput.files[0] || null;
-      attachmentName.textContent = selectedFile ? selectedFile.name : "";
-      attachmentChip.hidden = !selectedFile;
-      homePrompt.focus();
-    });
-    removeAttachment.addEventListener("click", () => {
-      selectedFile = null;
-      attachmentInput.value = "";
-      attachmentChip.hidden = true;
-      homePrompt.focus();
-    });
+  const setAttachmentMenu = (open) => {
+    attachmentMenu.hidden = !open;
+    attachmentButton.setAttribute("aria-expanded", String(open));
+    attachmentButton.classList.toggle("is-open", open);
+  };
+
+  attachmentButton.addEventListener("click", () => {
+    setAttachmentMenu(attachmentMenu.hidden);
+  });
+  attachmentMenu.addEventListener("click", (event) => {
+    const action = event.target.closest("[data-attachment-action]")?.dataset.attachmentAction;
+    if (!action) return;
+    if (action === "upload") {
+      setAttachmentMenu(false);
+      attachmentInput.click();
+      return;
+    }
+    speechStatus.textContent = "This workspace tool is coming soon.";
+    setAttachmentMenu(false);
+  });
+  document.addEventListener("click", (event) => {
+    if (!attachmentMenu.hidden && !event.target.closest("#homeComposer")) setAttachmentMenu(false);
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !attachmentMenu.hidden) {
+      setAttachmentMenu(false);
+      attachmentButton.focus();
+    }
+  });
+  attachmentInput.addEventListener("change", () => {
+    selectedFile = attachmentInput.files[0] || null;
+    attachmentName.textContent = selectedFile ? selectedFile.name : "";
+    attachmentChip.hidden = !selectedFile;
+    if (selectedFile) homePrompt.focus();
+  });
+  removeAttachment.addEventListener("click", () => {
+    selectedFile = null;
+    attachmentInput.value = "";
+    attachmentChip.hidden = true;
+    homePrompt.focus();
   });
 
   const addMessage = (text, role, attachment = null) => {
