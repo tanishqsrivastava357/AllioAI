@@ -89,12 +89,18 @@ button {
 }
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 40;
   background: #000;
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+}
+
+.header + main {
+  padding-top: 78px;
 }
 
 .header-inner {
@@ -833,6 +839,10 @@ button {
 }
 
 @media (max-width: 720px) {
+  .header + main {
+    padding-top: 73px;
+  }
+
   .header-inner {
     flex-wrap: wrap;
     justify-content: space-between;
