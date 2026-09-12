@@ -1,0 +1,15 @@
+# AllioAI
+
+> AllioAI is an AI workspace for thinking, writing, research, and creative work.
+
+## Public pages
+
+- Homepage: https://allioai.vercel.app/
+- About: https://allioai.vercel.app/aboutus
+- Compare plans: https://allioai.vercel.app/compare-plans
+- Contact: https://allioai.vercel.app/contact
+- Release notes: https://allioai.vercel.app/release
+- Privacy policy: https://allioai.vercel.app/privacy-policy
+- Terms and conditions: https://allioai.vercel.app/tnc
+
+AllioAI supports AI chat, deep research, image generation, projects, and file analysis.
