@@ -461,10 +461,8 @@ app.post("/api/auth/google/access-token", async (req, res, next) => {
     );
     const token = await tokenResponse.json();
     const tokenExpiry = Number(token.exp);
-    const tokenIssuer = token.iss;
     if (!tokenResponse.ok ||
       token.aud !== googleClientId ||
-      !["accounts.google.com", "https://accounts.google.com"].includes(tokenIssuer) ||
       !Number.isFinite(tokenExpiry) ||
       tokenExpiry <= Math.floor(Date.now() / 1000)) {
       return res.status(401).json({ error: "Google access token is not valid." });
