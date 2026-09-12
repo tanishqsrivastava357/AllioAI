@@ -21,13 +21,6 @@ const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 const sessionSecret = process.env.SESSION_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
 const geminiApiKey = process.env.GEMINI_API_KEY;
-const razorpayKeyId = process.env.RAZORPAY_KEY_ID;
-const razorpayKeySecret = process.env.RAZORPAY_KEY_SECRET;
-const razorpayWebhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
-const razorpayPlans = {
-  monthly: process.env.RAZORPAY_MONTHLY_PLAN_ID,
-  annual: process.env.RAZORPAY_ANNUAL_PLAN_ID
-};
 const allowedUploadTypes = new Set([
   "image/png", "image/jpeg", "image/webp", "image/gif", "application/pdf",
   "text/plain", "text/csv", "text/markdown", "application/json", "application/javascript",
@@ -95,34 +88,12 @@ app.use(helmet({
       frameSrc: ["https://accounts.google.com"],
       imgSrc: ["'self'", "data:", "blob:", "https:"],
       objectSrc: ["'none'"],
-      scriptSrc: ["'self'", "https://accounts.google.com", "https://cdn.jsdelivr.net", "https://checkout.razorpay.com"],
+      scriptSrc: ["'self'", "https://accounts.google.com", "https://cdn.jsdelivr.net"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"]
     }
   },
   crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
 }));
-app.post("/api/billing/webhook", express.raw({ type: "application/json", limit: "256kb" }), async (req, res) => {
-  const signature = req.get("x-razorpay-signature");
-  if (!razorpayWebhookSecret || !signature || !Buffer.isBuffer(req.body)) return res.sendStatus(400);
-  const expected = crypto.createHmac("sha256", razorpayWebhookSecret).update(req.body).digest("hex");
-  if (signature.length !== expected.length || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) return res.sendStatus(401);
-  try {
-    const event = JSON.parse(req.body.toString("utf8"));
-    const subscription = event.payload?.subscription?.entity;
-    if (subscription?.id) {
-      const active = ["active", "authenticated", "charged"].includes(subscription.status);
-      await pool.query(
-        `UPDATE users SET subscription = $1, subscription_plan = COALESCE($2, subscription_plan), updated_at = NOW()
-         WHERE razorpay_subscription_id = $3`,
-        [active ? "pro" : "free", subscription.plan_id === razorpayPlans.annual ? "annual" : "monthly", subscription.id]
-      );
-    }
-    return res.sendStatus(200);
-  } catch (error) {
-    console.error("Razorpay webhook processing failed:", error);
-    return res.sendStatus(400);
-  }
-});
 app.use(express.json({ limit: "12mb" }));
 app.use(cookieParser());
 app.use("/api/auth", rateLimit({ windowMs: 15 * 60 * 1000, limit: 30 }));
@@ -611,26 +582,6 @@ app.post("/api/auth/logout", async (req, res, next) => {
     return next(error);
   }
 });
-
-app.post("/api/billing/subscription", requireUser(async (req, res) => {
-  if (!razorpayKeyId || !razorpayKeySecret || !razorpayPlans.monthly || !razorpayPlans.annual) {
-    return res.status(503).json({ error: "Subscriptions are not configured." });
-  }
-  const plan = req.body.plan;
-  if (plan !== "monthly" && plan !== "annual") return res.status(400).json({ error: "Invalid subscription plan." });
-  const response = await fetch("https://api.razorpay.com/v1/subscriptions", {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(`${razorpayKeyId}:${razorpayKeySecret}`).toString("base64")}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ plan_id: razorpayPlans[plan], total_count: 120, customer_notify: 1, notes: { user_id: String(req.user.id), plan } })
-  });
-  const data = await response.json();
-  if (!response.ok || !data.id) return res.status(502).json({ error: "Unable to start the subscription." });
-  await pool.query("UPDATE users SET razorpay_subscription_id = $1, subscription_plan = $2 WHERE id = $3", [data.id, plan, req.user.id]);
-  return res.json({ subscriptionId: data.id, keyId: razorpayKeyId, plan });
-}));
 
 app.get("/api/conversations", requireUser(async (req, res) => {
   const result = await pool.query(
