@@ -168,6 +168,12 @@ function githubStateCookieOptions() {
   return { ...cookieOptions(), maxAge: 10 * 60 * 1000 };
 }
 
+function safeRedirectPath(value) {
+  return typeof value === "string" && /^\/(?:compare-plans|app)(?:[/?#]|$)/.test(value)
+    ? value
+    : "/app";
+}
+
 async function createSession(userId, res) {
   const sessionToken = randomToken();
   await pool.query(
@@ -559,6 +565,7 @@ app.get("/api/auth/github", (req, res) => {
   }
   const state = randomToken();
   res.cookie("allioai_github_state", state, githubStateCookieOptions());
+  res.cookie("allioai_login_redirect", safeRedirectPath(req.query.redirect), githubStateCookieOptions());
   const params = new URLSearchParams({
     client_id: githubClientId,
     redirect_uri: `${siteUrl}/api/auth/github/callback`,
@@ -572,7 +579,9 @@ app.get("/api/auth/github/callback", async (req, res, next) => {
   try {
     const { code, state } = req.query;
     const savedState = req.cookies.allioai_github_state;
+    const redirectPath = safeRedirectPath(req.cookies.allioai_login_redirect);
     res.clearCookie("allioai_github_state", githubStateCookieOptions());
+    res.clearCookie("allioai_login_redirect", githubStateCookieOptions());
     const stateMatches = typeof state === "string" && typeof savedState === "string" &&
       Buffer.byteLength(state) === Buffer.byteLength(savedState) &&
       crypto.timingSafeEqual(Buffer.from(state), Buffer.from(savedState));
@@ -611,7 +620,7 @@ app.get("/api/auth/github/callback", async (req, res, next) => {
       [String(profile.id), email, profile.name || profile.login || email, profile.avatar_url || ""]
     );
     await createSession(userResult.rows[0].id, res);
-    return res.redirect("/app");
+    return res.redirect(redirectPath);
   } catch (error) {
     return next(error);
   }

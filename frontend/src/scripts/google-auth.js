@@ -1,4 +1,8 @@
 const authStatus = document.getElementById("auth-status");
+const requestedRedirect = new URLSearchParams(window.location.search).get("redirect");
+if (requestedRedirect && /^\/(?:compare-plans|app)(?:[/?#]|$)/.test(requestedRedirect)) {
+  window.localStorage.setItem("redirectAfterLogin", requestedRedirect);
+}
 
 function showAuthStatus(message, isError = false) {
   if (!authStatus) return;

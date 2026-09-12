@@ -15,6 +15,7 @@
     if (proPrice) proPrice.textContent = proPrice.dataset[mode];
     if (proPeriod) proPeriod.textContent = mode === "annual" ? "/yr" : "/mo";
     if (subscribeButton) subscribeButton.dataset.subscribePlan = mode;
+    if (subscribeButton) subscribeButton.href = `/signin?redirect=${encodeURIComponent(`/compare-plans?checkout=${mode}`)}`;
   };
 
   billingButtons.forEach((button) => {
@@ -54,7 +55,10 @@
       subscribeButton.textContent = originalText;
     }
   };
-  subscribeButton?.addEventListener("click", startCheckout);
+  subscribeButton?.addEventListener("click", (event) => {
+    event.preventDefault();
+    startCheckout();
+  });
   const checkoutPlan = new URLSearchParams(window.location.search).get("checkout");
   if (checkoutPlan === "monthly" || checkoutPlan === "annual") {
     setBilling(checkoutPlan);
