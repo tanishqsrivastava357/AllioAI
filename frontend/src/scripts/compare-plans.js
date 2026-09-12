@@ -4,7 +4,7 @@
   const proPrice = document.querySelector(".plan-price[data-monthly]");
   const proPeriod = document.querySelector(".recommended .plan-period");
   const billingButtons = document.querySelectorAll("[data-compare-billing]");
-  const subscribeButton = document.querySelector("[data-subscribe-plan]");
+  const subscribeButtons = document.querySelectorAll("[data-subscribe-plan]");
 
   const setBilling = (mode) => {
     billingButtons.forEach((button) => {
@@ -14,29 +14,32 @@
     });
     if (proPrice) proPrice.textContent = proPrice.dataset[mode];
     if (proPeriod) proPeriod.textContent = mode === "annual" ? "/yr" : "/mo";
-    if (subscribeButton) subscribeButton.dataset.subscribePlan = mode;
-    if (subscribeButton) subscribeButton.href = `/signin?redirect=${encodeURIComponent(`/compare-plans?checkout=${mode}`)}`;
+    subscribeButtons.forEach((button) => {
+      button.dataset.subscribePlan = mode;
+      button.href = `/signin?redirect=${encodeURIComponent(`/compare-plans?checkout=${mode}`)}`;
+    });
   };
 
   billingButtons.forEach((button) => {
     button.addEventListener("click", () => setBilling(button.dataset.compareBilling));
   });
   setBilling("monthly");
-  const startCheckout = async () => {
-    if (!subscribeButton) return;
-    const originalText = subscribeButton.textContent;
-    subscribeButton.disabled = true;
-    subscribeButton.textContent = "Loading...";
+  const startCheckout = async (button) => {
+    const plan = button.dataset.subscribePlan;
+    if (plan !== "monthly" && plan !== "annual") return;
+    const originalText = button.textContent;
+    subscribeButtons.forEach((item) => { item.setAttribute("aria-disabled", "true"); });
+    button.textContent = "Loading...";
     try {
       const response = await fetch("/api/billing/subscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ plan: subscribeButton.dataset.subscribePlan })
+        body: JSON.stringify({ plan })
       });
       const data = await response.json();
       if (response.status === 401) {
-        window.localStorage.setItem("redirectAfterLogin", `/compare-plans?checkout=${subscribeButton.dataset.subscribePlan}`);
+        window.localStorage.setItem("redirectAfterLogin", `/compare-plans?checkout=${plan}`);
         window.location.href = "/signin";
         return;
       }
@@ -51,18 +54,18 @@
     } catch (error) {
       window.alert(error.message || "Unable to start checkout.");
     } finally {
-      subscribeButton.disabled = false;
-      subscribeButton.textContent = originalText;
+      subscribeButtons.forEach((item) => { item.removeAttribute("aria-disabled"); });
+      button.textContent = originalText;
     }
   };
-  subscribeButton?.addEventListener("click", (event) => {
+  subscribeButtons.forEach((button) => button.addEventListener("click", (event) => {
     event.preventDefault();
-    startCheckout();
-  });
+    startCheckout(button);
+  }));
   const checkoutPlan = new URLSearchParams(window.location.search).get("checkout");
   if (checkoutPlan === "monthly" || checkoutPlan === "annual") {
     setBilling(checkoutPlan);
-    if (subscribeButton) window.setTimeout(startCheckout, 250);
+    if (subscribeButtons[0]) window.setTimeout(() => startCheckout(subscribeButtons[0]), 250);
   }
 
   document.querySelectorAll(".compare-table tbody td, .compare-table tfoot td").forEach((cell) => {
