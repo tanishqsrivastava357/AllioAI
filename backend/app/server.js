@@ -89,10 +89,10 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       baseUri: ["'self'"],
-      connectSrc: ["'self'", "https://accounts.google.com", "https://www.googleapis.com"],
+      connectSrc: ["'self'", "https://accounts.google.com", "https://www.googleapis.com", "https://api.razorpay.com"],
       fontSrc: ["'self'", "https:", "data:"],
       frameAncestors: ["'none'"],
-      frameSrc: ["https://accounts.google.com"],
+      frameSrc: ["https://accounts.google.com", "https://checkout.razorpay.com", "https://api.razorpay.com"],
       imgSrc: ["'self'", "data:", "blob:", "https:"],
       objectSrc: ["'none'"],
       scriptSrc: ["'self'", "https://accounts.google.com", "https://cdn.jsdelivr.net", "https://checkout.razorpay.com"],

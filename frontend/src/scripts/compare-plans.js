@@ -22,14 +22,33 @@
   });
   setBilling("monthly");
   subscribeButton?.addEventListener("click", async () => {
-    const response = await fetch("/api/billing/subscription", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan: subscribeButton.dataset.subscribePlan })
-    });
-    const data = await response.json();
-    if (!response.ok) { window.location.href = "/signin"; return; }
-    if (!window.Razorpay) return;
-    new window.Razorpay({ key: data.keyId, subscription_id: data.subscriptionId, name: "AllioAI", description: "AllioAI Pro" }).open();
+    const originalText = subscribeButton.textContent;
+    subscribeButton.disabled = true;
+    subscribeButton.textContent = "Loading...";
+    try {
+      const response = await fetch("/api/billing/subscription", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan: subscribeButton.dataset.subscribePlan })
+      });
+      const data = await response.json();
+      if (response.status === 401) {
+        window.location.href = "/signin?redirect=/compare-plans";
+        return;
+      }
+      if (!response.ok) throw new Error(data.error || "Unable to start checkout.");
+      if (!window.Razorpay) throw new Error("Payment checkout is unavailable. Please refresh and try again.");
+      new window.Razorpay({
+        key: data.keyId,
+        subscription_id: data.subscriptionId,
+        name: "AllioAI",
+        description: `AllioAI Pro ${data.plan === "annual" ? "Annual" : "Monthly"}`
+      }).open();
+    } catch (error) {
+      window.alert(error.message || "Unable to start checkout.");
+    } finally {
+      subscribeButton.disabled = false;
+      subscribeButton.textContent = originalText;
+    }
   });
 
   document.querySelectorAll(".compare-table tbody td, .compare-table tfoot td").forEach((cell) => {
