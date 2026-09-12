@@ -460,7 +460,13 @@ app.post("/api/auth/google/access-token", async (req, res, next) => {
       `https://oauth2.googleapis.com/tokeninfo?access_token=${encodeURIComponent(accessToken)}`
     );
     const token = await tokenResponse.json();
-    if (!tokenResponse.ok || token.aud !== googleClientId) {
+    const tokenExpiry = Number(token.exp);
+    const tokenIssuer = token.iss;
+    if (!tokenResponse.ok ||
+      token.aud !== googleClientId ||
+      !["accounts.google.com", "https://accounts.google.com"].includes(tokenIssuer) ||
+      !Number.isFinite(tokenExpiry) ||
+      tokenExpiry <= Math.floor(Date.now() / 1000)) {
       return res.status(401).json({ error: "Google access token is not valid." });
     }
     const profileResponse = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
