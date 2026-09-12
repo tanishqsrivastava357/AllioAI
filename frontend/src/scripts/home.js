@@ -135,8 +135,7 @@ if (previewPrompt) {
 
         const updatePrice = (billingMode) => {
           const monthlyValue = Number(priceValue.dataset.monthly || 19);
-          const discountedAnnual = monthlyValue * 12 * 0.8;
-          const annualValue = Math.round((discountedAnnual - 9) / 10) * 10 + 9;
+          const annualValue = Number(priceValue.dataset.annual || 89);
           if (billingMode === "annual") {
             priceValue.textContent = "$" + annualValue;
             pricePeriod.textContent = "/yr";
