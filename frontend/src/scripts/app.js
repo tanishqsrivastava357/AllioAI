@@ -357,10 +357,15 @@
     const rendered = addMessage("", "assistant");
     const characters = Array.from(text);
     let output = "";
+    let lastRender = 0;
     for (let index = 0; index < characters.length; index += 8) {
       output += characters.slice(index, index + 8).join("");
-      rendered.content.innerHTML = renderRichText(output);
-      messages.scrollTop = messages.scrollHeight;
+      const now = performance.now();
+      if (now - lastRender >= 48 || index + 8 >= characters.length) {
+        rendered.content.innerHTML = renderRichText(output);
+        messages.scrollTop = messages.scrollHeight;
+        lastRender = now;
+      }
       await new Promise((resolve) => window.setTimeout(resolve, 12));
     }
   };
