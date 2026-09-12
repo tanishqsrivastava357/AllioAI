@@ -134,8 +134,10 @@ function cookieOptions() {
 function requireSameOrigin(req, res, next) {
   if (["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
   const origin = req.get("origin");
-  const host = req.get("host");
-  if (origin && new URL(origin).host !== host) {
+  const expectedOrigin = isProduction
+    ? siteUrl
+    : `${req.protocol}://${req.get("host")}`;
+  if (!origin || origin !== expectedOrigin) {
     return res.status(403).json({ error: "Request origin is not allowed." });
   }
   return next();
@@ -624,7 +626,10 @@ app.get("/api/conversations/:id", requireUser(async (req, res) => {
 app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
   const content = typeof req.body.content === "string" ? req.body.content.trim().slice(0, 20000) : "";
   if (!content) return res.status(400).json({ error: "Message cannot be empty." });
-  const modelKey = typeof req.body.model === "string" && modelConfigs[req.body.model] ? req.body.model : "allio-pro";
+  if (typeof req.body.model !== "string" || !modelConfigs[req.body.model]) {
+    return res.status(400).json({ error: "The selected model is not available." });
+  }
+  const modelKey = req.body.model;
   const model = modelConfigs[modelKey];
   const hasUpload = req.body.hasUpload === true;
   const attachment = req.body.attachment && typeof req.body.attachment === "object" ? req.body.attachment : null;
@@ -710,8 +715,8 @@ app.post("/api/conversations/:id/messages", requireUser(async (req, res) => {
     await pool.query("UPDATE conversations SET updated_at = NOW() WHERE id = $1", [req.params.id]);
     return res.status(201).json({ message: message.rows[0], assistantMessage: assistantMessage.rows[0], model: model.model });
   } catch (error) {
-    console.error(error);
-    return res.status(502).json({ error: error.message || "The selected AI model could not respond." });
+    console.error("Message generation failed:", error);
+    return res.status(502).json({ error: "The selected AI model could not respond." });
   }
 }));
 
@@ -733,7 +738,7 @@ app.post("/api/images/generate", requireUser(async (req, res, next) => {
     return res.json({ image: await generateGeminiImage(prompt), model: "AllioGPT 1.0 Creative" });
   } catch (error) {
     console.error("Image generation failed:", error);
-    return res.status(502).json({ error: error.message || "The image model could not respond." });
+    return res.status(502).json({ error: "The image model could not respond." });
   }
 }));
 
